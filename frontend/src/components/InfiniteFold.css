@@ -1,0 +1,292 @@
+@import url('https://fonts.googleapis.com/css2?family=Philosopher:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap');
+
+.infinite-fold-container {
+  font-family: 'Philosopher', serif;
+  background: radial-gradient(circle at center, #0f172a 0%, #020617 100%);
+  color: rgb(226, 232, 240);
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.infinite-fold-container.dark {
+  background: radial-gradient(circle at center, #0f172a 0%, #020617 100%);
+}
+
+.infinite-fold-container.light {
+  background: radial-gradient(circle at center, #f8fafc 0%, #e2e8f0 100%);
+}
+
+.font-philosopher {
+  font-family: 'Philosopher', serif;
+}
+
+.font-jetbrains {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.golden-spiral {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0.03;
+  z-index: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25'%3E%3Cpath d='M0,0 L800,0 L800,800 L0,800 Z M300,500 A200,200 0 0 1 500,300 A200,200 0 0 1 300,500 Z' fill='none' stroke='%23f8fafc' stroke-width='1'/%3E%3C/svg%3E");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.axiom-card {
+  transform-style: preserve-3d;
+  transition: all 0.3s ease;
+}
+
+.axiom-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(56, 189, 248, 0.1);
+}
+
+.fractal-divider {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 140'%3E%3Cpath fill='%2338bdf8' fill-opacity='0.2' d='M0,0V140H1440V0C1440,0,1214.79,112.92,884.5,90.16C462,60,416.5,46,0,0Z'/%3E%3C/svg%3E");
+  background-size: cover;
+  background-position: center;
+  height: 80px;
+  width: 100%;
+  margin: 3rem 0;
+}
+
+.holographic-border {
+  border: 1px solid transparent;
+  background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.8)) padding-box,
+              linear-gradient(135deg, rgba(56, 189, 248, 0.5), rgba(234, 179, 8, 0.5), rgba(56, 189, 248, 0.5)) border-box;
+}
+
+.quote-ribbon {
+  background: linear-gradient(90deg, rgba(56, 189, 248, 0.1) 0%, rgba(234, 179, 8, 0.1) 100%);
+  border-top: 1px solid rgba(56, 189, 248, 0.2);
+  border-bottom: 1px solid rgba(234, 179, 8, 0.2);
+}
+
+.theme-toggle {
+  transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+  transform: rotate(30deg);
+}
+
+.floating-cta {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes fade {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+@keyframes rotate-quotes {
+  0%, 20% { opacity: 1; transform: translateY(0); }
+  25%, 45% { opacity: 0; transform: translateY(-20px); }
+  50%, 70% { opacity: 1; transform: translateY(0); }
+  75%, 95% { opacity: 0; transform: translateY(-20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.quote-1 { animation: rotate-quotes 16s infinite; }
+.quote-2 { animation: rotate-quotes 16s infinite 4s; }
+.quote-3 { animation: rotate-quotes 16s infinite 8s; }
+.quote-4 { animation: rotate-quotes 16s infinite 12s; }
+
+/* Enhanced sacred geometry effects */
+.axiom-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent 30%, rgba(56, 189, 248, 0.05) 50%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  border-radius: 0.5rem;
+}
+
+.axiom-card:hover::before {
+  opacity: 1;
+}
+
+/* Fibonacci spiral enhancement */
+.golden-spiral::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.1) 0%, transparent 70%);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: spin 20s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Particle animation */
+.particle {
+  animation: float 15s ease-in-out infinite;
+}
+
+/* Enhanced gradient text */
+.bg-clip-text {
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Sacred geometry grid overlay */
+.holographic-border::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    linear-gradient(45deg, transparent 48%, rgba(56, 189, 248, 0.1) 49%, rgba(56, 189, 248, 0.1) 51%, transparent 52%),
+    linear-gradient(-45deg, transparent 48%, rgba(234, 179, 8, 0.1) 49%, rgba(234, 179, 8, 0.1) 51%, transparent 52%);
+  background-size: 20px 20px;
+  opacity: 0.3;
+  border-radius: 0.75rem;
+  pointer-events: none;
+}
+
+/* Vitruvian proportion adjustments */
+.pdf-container {
+  aspect-ratio: 16/9;
+}
+
+/* Recursive text shadow effect */
+.text-transparent {
+  text-shadow: 
+    0 0 10px rgba(56, 189, 248, 0.3),
+    0 0 20px rgba(56, 189, 248, 0.2),
+    0 0 30px rgba(56, 189, 248, 0.1);
+}
+
+/* Enhanced backdrop blur */
+.backdrop-blur-sm {
+  backdrop-filter: blur(4px) saturate(180%);
+}
+
+/* Smooth transitions for all interactive elements */
+.transition-all {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Enhanced hover states */
+.hover\\:shadow-2xl:hover {
+  box-shadow: 0 25px 50px -12px rgba(56, 189, 248, 0.25);
+}
+
+.hover\\:border-sky-400\\/50:hover {
+  border-color: rgba(56, 189, 248, 0.5);
+}
+
+.hover\\:text-amber-300:hover {
+  color: rgb(252, 211, 77);
+}
+
+/* Recursive mathematics enhancement */
+.font-mono {
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.025em;
+}
+
+/* Enhanced card depth */
+.bg-slate-800\\/50 {
+  background-color: rgba(30, 41, 59, 0.5);
+  border: 1px solid rgba(56, 189, 248, 0.1);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Axiomatic footer enhancement */
+.quote-ribbon::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, 
+    rgba(56, 189, 248, 0.1) 0%, 
+    rgba(234, 179, 8, 0.1) 25%, 
+    rgba(56, 189, 248, 0.1) 50%, 
+    rgba(234, 179, 8, 0.1) 75%, 
+    rgba(56, 189, 248, 0.1) 100%);
+  opacity: 0.5;
+  animation: shimmer 4s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 0.8; }
+}
+
+/* Mathematical symbol styling */
+.text-4xl {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+  text-shadow: 0 0 20px rgba(252, 211, 77, 0.5);
+}
+
+/* Enhanced form inputs (if any) */
+input, textarea, select {
+  background: rgba(30, 41, 59, 0.5);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  color: rgb(226, 232, 240);
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  transition: all 0.3s ease;
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: rgba(56, 189, 248, 0.6);
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.1);
+}
+
+/* Responsive enhancements */
+@media (max-width: 768px) {
+  .text-5xl {
+    font-size: 2.5rem;
+  }
+  
+  .text-6xl {
+    font-size: 3rem;
+  }
+  
+  .text-7xl {
+    font-size: 3.5rem;
+  }
+  
+  .px-4 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .py-16 {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+}
