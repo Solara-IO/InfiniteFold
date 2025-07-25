@@ -798,39 +798,17 @@
                 </div>
             </div>
         </section>
+
+        <!-- Visitor Counter -->
+        <div class="text-center mb-16">
+            <h3 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-amber-300 mb-4">
+                Visitors
+            </h3>
+            <p id="visitor-count" class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-amber-300 mb-2">
+                Loading...
+            </p>
+        </div>
     </div>
-       <!-- Visitor Counter -->
-<div style="text-align: center; font-family: 'Arial', sans-serif; margin-top: 40px;">
-  <h3 style="
-      color: #00ffff;
-      text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
-      font-size: 28px;
-      margin-bottom: 10px;">
-    Visitors
-  </h3>
-  <p id="visitor-count" style="
-      font-size: 36px;
-      color: #ffffff;
-      text-shadow: 0 0 8px #00ffff, 0 0 16px #00ffff;">
-    Loading...
-  </p>
-</div>
-
-<script>
-  async function updateVisitorCount() {
-    const endpoint = 'https://api.countapi.xyz/update/infinitefold/visits?amount=1';
-    try {
-      const response = await fetch(endpoint);
-      const data = await response.json();
-      document.getElementById('visitor-count').innerText = data.value;
-    } catch (error) {
-      console.error('Visitor counter error:', error);
-      document.getElementById('visitor-count').innerText = 'Error';
-    }
-  }
-
-  updateVisitorCount();
-</script>
         
     <!-- Quote Ribbon Footer -->
     <footer class="quote-ribbon py-4 w-full fixed bottom-0 left-0 z-30 backdrop-blur-sm">
@@ -887,9 +865,37 @@
                     document.body.style.background = 'radial-gradient(circle at center, #f8fafc 0%, #e2e8f0 100%)';
                 }
             });
+
+            // Visitor Counter - Simple Backend Implementation
+            async function updateVisitorCount() {
+                try {
+                    // Try to increment visitor count using our backend
+                    const response = await fetch('/api/visitors', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        document.getElementById('visitor-count').innerText = data.count;
+                    } else {
+                        throw new Error('Backend visitor counter failed');
+                    }
+                } catch (error) {
+                    console.error('Visitor counter error:', error);
+                    // Fallback to localStorage counter for simple functionality
+                    let count = parseInt(localStorage.getItem('visitorCount') || '0');
+                    count++;
+                    localStorage.setItem('visitorCount', count.toString());
+                    document.getElementById('visitor-count').innerText = count;
+                }
+            }
+
+            updateVisitorCount();
         });
     </script>
- 
 
 </body>
 </html>
