@@ -857,5 +857,38 @@
             });
         });
     </script>
+    <!-- Visitor Counter -->
+<div style="text-align: center; font-family: 'Arial', sans-serif; margin-top: 40px;">
+  <h3 style="
+      color: #00ffff;
+      text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
+      font-size: 28px;
+      margin-bottom: 10px;">
+    Visitors
+  </h3>
+  <p id="visitor-count" style="
+      font-size: 36px;
+      color: #ffffff;
+      text-shadow: 0 0 8px #00ffff, 0 0 16px #00ffff;">
+    Loading...
+  </p>
+</div>
+
+<script>
+  async function updateVisitorCount() {
+    const endpoint = 'https://api.countapi.xyz/hit/infinitefold/visits';
+    try {
+      const response = await fetch(endpoint);
+      const data = await response.json();
+      document.getElementById('visitor-count').innerText = data.value;
+    } catch (error) {
+      console.error('Visitor counter error:', error);
+      document.getElementById('visitor-count').innerText = 'Error';
+    }
+  }
+
+  updateVisitorCount();
+</script>
+
 </body>
 </html>
