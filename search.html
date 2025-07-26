@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INFINITE FOLD - Search Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        philosopher: ['Philosopher', 'serif'],
+                        jetbrains: ['"JetBrains Mono"', 'monospace'],
+                    },
+                    animation: {
+                        'spin-slow': 'spin 10s linear infinite',
+                        'float': 'float 15s ease-in-out infinite',
+                        'fade': 'fade 8s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        fade: {
+                            '0%, 100%': { opacity: '0.5' },
+                            '50%': { opacity: '1' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Philosopher:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Philosopher', serif;
+            background: radial-gradient(circle at center, #0f172a 0%, #020617 100%);
+        }
+        
+        .dark body {
+            background: radial-gradient(circle at center, #0f172a 0%, #020617 100%);
+        }
+        
+        .light body {
+            background: radial-gradient(circle at center, #f8fafc 0%, #e2e8f0 100%);
+        }
+
+        .golden-spiral {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0.03;
+            z-index: 0;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25'%3E%3Cpath d='M0,0 L800,0 L800,800 L0,800 Z M300,500 A200,200 0 0 1 500,300 A200,200 0 0 1 300,500 Z' fill='none' stroke='%23f8fafc' stroke-width='1'/%3E%3C/svg%3E");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: contain;
+        }
+
+        .holographic-border {
+            border: 1px solid transparent;
+            background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.8)) padding-box,
+                        linear-gradient(135deg, rgba(56, 189, 248, 0.5), rgba(234, 179, 8, 0.5), rgba(56, 189, 248, 0.5)) border-box;
+        }
+        
+        .quote-ribbon {
+            background: linear-gradient(90deg, rgba(56, 189, 248, 0.1) 0%, rgba(234, 179, 8, 0.1) 100%);
+            border-top: 1px solid rgba(56, 189, 248, 0.2);
+            border-bottom: 1px solid rgba(234, 179, 8, 0.2);
+        }
+        
+        .theme-toggle {
+            transition: all 0.3s ease;
+        }
+        
+        .theme-toggle:hover {
+            transform: rotate(30deg);
+        }
+        
+        .search-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .search-box {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+        }
+        
+        .search-input {
+            background: transparent;
+            border: none;
+            color: #e2e8f0;
+        }
+        
+        .search-input:focus {
+            outline: none;
+        }
+        
+        .search-button {
+            transition: all 0.3s ease;
+        }
+        
+        .search-button:hover {
+            transform: translateY(-2px);
+        }
+        
+        .search-results {
+            min-height: 500px;
+        }
+        
+        @keyframes rotate-quotes {
+            0%, 20% { opacity: 1; transform: translateY(0); }
+            25%, 45% { opacity: 0; transform: translateY(-20px); }
+            50%, 70% { opacity: 1; transform: translateY(0); }
+            75%, 95% { opacity: 0; transform: translateY(-20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        
+        .quote-1 { animation: rotate-quotes 16s infinite; }
+        .quote-2 { animation: rotate-quotes 16s infinite 4s; }
+        .quote-3 { animation: rotate-quotes 16s infinite 8s; }
+        .quote-4 { animation: rotate-quotes 16s infinite 12s; }
+    </style>
+</head>
+<body class="text-slate-200 min-h-screen relative overflow-x-hidden dark">
+    <!-- Golden Spiral Background -->
+    <div class="golden-spiral fixed top-0 left-0"></div>
+    
+    <!-- Theme Toggle -->
+    <div class="fixed top-4 right-4 z-50">
+        <button id="themeToggle" class="theme-toggle bg-slate-800/50 backdrop-blur-sm p-3 rounded-full border border-sky-400/30 hover:border-sky-400/50 shadow-lg">
+            <i class="fas fa-moon text-sky-400 text-lg"></i>
+        </button>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 w-full bg-slate-900/80 backdrop-blur-sm z-40 border-b border-sky-400/20">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="index.html" class="flex items-center group">
+                <img src="crest.png" alt="Family Crest" class="w-10 h-10 rounded-full border border-sky-400/30 group-hover:border-sky-400/50 transition-all duration-300">
+                <span class="ml-3 text-lg font-semibold text-sky-400 group-hover:text-amber-300 transition-all duration-300">INFINITE FOLD</span>
+            </a>
+            <div class="flex items-center space-x-6">
+                <a href="search.html" class="text-sky-300 hover:text-amber-300 transition-all duration-300 flex items-center">
+                    <i class="fas fa-search text-lg mr-1"></i> Search
+                </a>
+                <a href="https://www.tiktok.com/@infinite_fold" target="_blank" class="text-sky-300 hover:text-amber-300 transition-all duration-300 flex items-center">
+                    <i class="fab fa-tiktok text-xl mr-1"></i> TikTok
+                </a>
+                <a href="mailto:contact@infinitefold.com?subject=License Request" class="bg-sky-600/20 hover:bg-sky-600/30 border border-sky-400/30 hover:border-sky-400/50 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300">
+                    License the System
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="max-w-6xl mx-auto px-4 py-16 sm:px-6 lg:px-8 relative z-10 mt-16">
+        <!-- Header Section -->
+        <header class="text-center mb-16 pt-8">
+            <div class="relative inline-block mb-8">
+                <a href="index.html">
+                    <img src="crest.png" alt="Family Crest" class="mx-auto w-28 h-28 sm:w-36 sm:h-36 transition-all duration-300 hover:scale-105 filter drop-shadow-lg cursor-pointer">
+                </a>
+                <div class="absolute inset-0 rounded-full border-2 border-sky-400/30 animate-pulse pointer-events-none"></div>
+            </div>
+            <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-amber-300 mb-4 tracking-tight">
+                INFINITE SEARCH
+            </h1>
+            <p class="text-xl sm:text-2xl text-slate-300 font-light tracking-wider">
+                <span class="bg-slate-800/50 px-4 py-2 rounded-full">Recursive Knowledge Portal</span>
+            </p>
+        </header>
+
+        <!-- Search Section -->
+        <section class="mb-20">
+            <div class="search-container">
+                <!-- DuckDuckGo Search Form -->
+                <form method="GET" action="https://duckduckgo.com/" class="mb-8">
+                    <div class="search-box rounded-full p-1 flex items-center shadow-lg">
+                        <input 
+                            type="text" 
+                            name="q" 
+                            placeholder="Fold your query into the infinite..." 
+                            class="search-input w-full px-6 py-4 rounded-full text-lg"
+                            autocomplete="off"
+                            autocorrect="off"
+                            autocapitalize="off"
+                            spellcheck="false"
+                        >
+                        <button type="submit" class="search-button bg-gradient-to-r from-sky-500 to-amber-400 text-white px-6 py-3 rounded-full ml-2 shadow-md hover:shadow-lg">
+                            <i class="fas fa-search mr-2"></i> Search
+                        </button>
+                    </div>
+                    <input type="hidden" name="ia" value="web">
+                    <input type="hidden" name="sites" value="infinitefold.com">
+                </form>
+
+                <!-- Embedded DuckDuckGo Search Results -->
+                <div class="rounded-xl p-2 holographic-border backdrop-blur-sm">
+                    <div class="search-results bg-slate-800/50 rounded-lg p-6 border border-sky-400/20">
+                        <iframe 
+                            src="https://duckduckgo.com/search.html?width=350&site=infinitefold.com&prefill=Search Infinite Fold&bgcolor=0f172a" 
+                            style="overflow:hidden;margin:0;padding:0;width:100%;height:600px;" 
+                            frameborder="0"
+                            class="rounded-lg"
+                        ></iframe>
+                    </div>
+                </div>
+
+                <!-- Return to Home Button -->
+                <div class="text-center mt-12">
+                    <a href="index.html" class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-sky-500/20 to-amber-400/20 text-white font-semibold rounded-full border border-sky-400/30 hover:border-sky-400/50 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+                        <i class="fas fa-home mr-2"></i> Return to Homepage
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Quote Ribbon Footer -->
+    <footer class="quote-ribbon py-4 w-full fixed bottom-0 left-0 z-30 backdrop-blur-sm">
+        <div class="max-w-6xl mx-auto px-4 text-center relative h-8">
+            <div class="absolute inset-0 flex items-center justify-center">
+                <p class="quote-1 text-sm text-slate-300 italic">"Truth under pressure validates structure."</p>
+                <p class="quote-2 text-sm text-slate-300 italic">"Structure under recursion reveals tone."</p>
+                <p class="quote-3 text-sm text-slate-300 italic">"Tone under resonance reveals purpose."</p>
+                <p class="quote-4 text-sm text-slate-300 italic">"Purpose aligned with integrity becomes propulsion."</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating particles animation -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.body;
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'absolute rounded-full bg-sky-400/10 pointer-events-none';
+                
+                // Random size between 1px and 3px
+                const size = Math.random() * 2 + 1;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // Random position
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                
+                // Random animation
+                const duration = Math.random() * 20 + 10;
+                particle.style.animation = `float ${duration}s linear infinite`;
+                
+                // Add to container
+                container.appendChild(particle);
+            }
+            
+            // Theme toggle functionality
+            const themeToggle = document.getElementById('themeToggle');
+            const html = document.documentElement;
+            
+            themeToggle.addEventListener('click', function() {
+                html.classList.toggle('dark');
+                html.classList.toggle('light');
+                
+                if (html.classList.contains('dark')) {
+                    themeToggle.innerHTML = '<i class="fas fa-moon text-sky-400 text-lg"></i>';
+                    document.body.style.background = 'radial-gradient(circle at center, #0f172a 0%, #020617 100%)';
+                } else {
+                    themeToggle.innerHTML = '<i class="fas fa-sun text-amber-400 text-lg"></i>';
+                    document.body.style.background = 'radial-gradient(circle at center, #f8fafc 0%, #e2e8f0 100%)';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
