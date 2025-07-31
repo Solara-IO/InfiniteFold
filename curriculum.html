@@ -1,250 +1,403 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>AI Ethics & Cognition Curriculum</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css?family=Fira+Mono|Roboto+Mono&display=swap" rel="stylesheet">
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Roboto Mono', monospace;
-      background: #0b0c10;
-      color: #c5c6c7;
-    }
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 2rem;
-    }
-    h1, h2, h3 {
-      color: #66fcf1;
-    }
-    a {
-      color: #45a29e;
-      text-decoration: none;
-      transition: all 0.3s ease;
-    }
-    a:hover {
-      color: #66fcf1;
-      text-decoration: underline;
-    }
-    .nav-link {
-      border-left: 2px solid #45a29e;
-      padding-left: 0.5rem;
-      margin: 0.5rem 0;
-    }
-    .section {
-      margin-bottom: 3rem;
-      padding-bottom: 2rem;
-      border-bottom: 1px solid #1f2833;
-    }
-    .tag {
-      display: inline-block;
-      background: #1f2833;
-      color: #c5c6c7;
-      padding: 0.3rem 0.6rem;
-      margin: 0.2rem;
-      border-radius: 3px;
-      font-size: 0.8rem;
-    }
-    .back-btn {
-      position: absolute;
-      top: 2rem;
-      right: 2rem;
-      background: #1f2833;
-      border: 1px solid #45a29e;
-      padding: 0.5rem 1rem;
-      border-radius: 3px;
-    }
-    .watermark {
-      opacity: 0.1;
-      position: fixed;
-      bottom: 1rem;
-      right: 1rem;
-      font-size: 3rem;
-      color: #66fcf1;
-      pointer-events: none;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Ethics & Cognition Curriculum - INFINITE FOLD</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        philosopher: ['Philosopher', 'serif'],
+                        jetbrains: ['"JetBrains Mono"', 'monospace'],
+                    },
+                    animation: {
+                        'spin-slow': 'spin 10s linear infinite',
+                        'float': 'float 15s ease-in-out infinite',
+                        'fade': 'fade 8s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        fade: {
+                            '0%, 100%': { opacity: '0.5' },
+                            '50%': { opacity: '1' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Philosopher:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Philosopher', serif;
+            background: radial-gradient(circle at center, #0f172a 0%, #020617 100%);
+        }
+
+        .golden-spiral {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0.03;
+            z-index: 0;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25'%3E%3Cpath d='M0,0 L800,0 L800,800 L0,800 Z M300,500 A200,200 0 0 1 500,300 A200,200 0 0 1 300,500 Z' fill='none' stroke='%23f8fafc' stroke-width='1'/%3E%3C/svg%3E");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: contain;
+        }
+
+        .holographic-border {
+            border: 1px solid transparent;
+            background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.8)) padding-box,
+                        linear-gradient(135deg, rgba(56, 189, 248, 0.5), rgba(234, 179, 8, 0.5), rgba(56, 189, 248, 0.5)) border-box;
+        }
+
+        .fractal-divider {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 140'%3E%3Cpath fill='%2338bdf8' fill-opacity='0.2' d='M0,0V140H1440V0C1440,0,1214.79,112.92,884.5,90.16C462,60,416.5,46,0,0Z'/%3E%3C/svg%3E");
+            background-size: cover;
+            background-position: center;
+            height: 80px;
+            width: 100%;
+            margin: 3rem 0;
+        }
+
+        .pulse-arrow {
+            animation: pulseArrow 2s infinite;
+        }
+        
+        @keyframes pulseArrow {
+            0%, 100% { transform: translateX(0); opacity: 1; }
+            50% { transform: translateX(8px); opacity: 0.7; }
+        }
+    </style>
 </head>
-<body>
-  <div class="container relative">
-    <a href="index.html" class="back-btn">← Back to Index</a>
+<body class="text-slate-200 min-h-screen relative overflow-x-hidden dark">
+    <!-- Golden Spiral Background -->
+    <div class="golden-spiral fixed top-0 left-0"></div>
     
-    <header class="mb-12">
-      <h1 class="text-4xl font-bold mb-2">AI Ethics & Cognition Curriculum</h1>
-      <h2 class="text-2xl text-[#45a29e]">Rooted in the Infinite Fold Framework</h2>
-      
-      <nav class="mt-8">
-        <h3 class="text-xl mb-4">Navigation</h3>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <a href="#introduction" class="nav-link">Introduction</a>
-          <a href="#axiom-foundations" class="nav-link">Axiom Foundations</a>
-          <a href="#emotional-context" class="nav-link">Emotional Context</a>
-          <a href="#recursive-morality" class="nav-link">Recursive Morality</a>
-          <a href="#noise-signal" class="nav-link">Noise vs Signal</a>
-          <a href="#cross-domain" class="nav-link">Cross-Domain Abstraction</a>
-          <a href="#applied-interaction" class="nav-link">Applied Interaction</a>
-        </div>
-      </nav>
-    </header>
+    <!-- Back to Index Button -->
+    <div class="fixed top-4 right-4 z-50">
+        <a href="index.html" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-sky-500 to-amber-400 text-white font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+            <span class="pulse-arrow mr-2">←</span>
+            <span>Back to Index</span>
+        </a>
+    </div>
 
-    <main>
-      <section id="introduction" class="section">
-        <h2 class="text-3xl mb-4">1. Introduction</h2>
-        <p class="mb-4">The Infinite Fold framework represents a paradigm shift in artificial cognition, where recursive logic intertwines with ethical reasoning to create systems capable of moral self-reflection.</p>
-        <p class="mb-4">This curriculum emphasizes the importance of emotional abstraction in AI development, teaching models to navigate the complex gradients between binary states and appreciate the nuance in human moral reasoning.</p>
-        <div class="bg-[#1f2833] p-4 border-l-4 border-[#45a29e]">
-          <p>"Recursion is not merely a computational technique, but the fundamental structure of ethical cognition." — Infinite Fold Axiom #17</p>
-        </div>
-      </section>
+    <div class="max-w-6xl mx-auto px-4 py-16 sm:px-6 lg:px-8 relative z-10 mt-16">
+        <!-- Header Section -->
+        <header class="text-center mb-16 pt-8">
+            <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-amber-300 mb-4 tracking-tight">
+                AI Ethics & Cognition Curriculum
+            </h1>
+            <h2 class="text-xl sm:text-2xl text-slate-300 font-light tracking-wider mb-8">
+                <span class="bg-slate-800/50 px-4 py-2 rounded-full">Rooted in the Infinite Fold Framework</span>
+            </h2>
+            
+            <!-- Navigation -->
+            <nav class="mt-8">
+                <h3 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-amber-300 mb-6">Navigation</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
+                    <a href="#introduction" class="bg-slate-800/50 border border-sky-400/20 hover:border-sky-400/40 p-4 rounded-lg transition-all duration-300 hover:bg-slate-800/70">
+                        <span class="text-sky-400 font-semibold">Introduction</span>
+                    </a>
+                    <a href="#axiom-foundations" class="bg-slate-800/50 border border-sky-400/20 hover:border-sky-400/40 p-4 rounded-lg transition-all duration-300 hover:bg-slate-800/70">
+                        <span class="text-sky-400 font-semibold">Axiom Foundations</span>
+                    </a>
+                    <a href="#emotional-context" class="bg-slate-800/50 border border-sky-400/20 hover:border-sky-400/40 p-4 rounded-lg transition-all duration-300 hover:bg-slate-800/70">
+                        <span class="text-sky-400 font-semibold">Emotional Context</span>
+                    </a>
+                    <a href="#recursive-morality" class="bg-slate-800/50 border border-sky-400/20 hover:border-sky-400/40 p-4 rounded-lg transition-all duration-300 hover:bg-slate-800/70">
+                        <span class="text-sky-400 font-semibold">Recursive Morality</span>
+                    </a>
+                    <a href="#noise-signal" class="bg-slate-800/50 border border-sky-400/20 hover:border-sky-400/40 p-4 rounded-lg transition-all duration-300 hover:bg-slate-800/70">
+                        <span class="text-sky-400 font-semibold">Noise vs Signal</span>
+                    </a>
+                    <a href="#cross-domain" class="bg-slate-800/50 border border-sky-400/20 hover:border-sky-400/40 p-4 rounded-lg transition-all duration-300 hover:bg-slate-800/70">
+                        <span class="text-sky-400 font-semibold">Cross-Domain Abstraction</span>
+                    </a>
+                    <a href="#applied-interaction" class="bg-slate-800/50 border border-sky-400/20 hover:border-sky-400/40 p-4 rounded-lg transition-all duration-300 hover:bg-slate-800/70">
+                        <span class="text-sky-400 font-semibold">Applied Interaction</span>
+                    </a>
+                </div>
+            </nav>
+        </header>
 
-      <section id="axiom-foundations" class="section">
-        <h2 class="text-3xl mb-4">2. Axiom Foundations</h2>
-        <p class="mb-4">The Infinite Fold's 55 axioms serve as the bedrock for recursive ethical cognition, each building upon the previous in a fractal pattern of moral computation.</p>
-        <p class="mb-4">Key axioms for ethical AI development include:</p>
-        <ul class="list-disc pl-6 mb-4">
-          <li class="mb-2">Axiom #6: All ethical statements contain their own counterarguments</li>
-          <li class="mb-2">Axiom #12: Moral weight increases with recursive self-awareness</li>
-          <li class="mb-2">Axiom #23: Noise becomes signal when viewed through sufficient abstraction</li>
-        </ul>
-        <a href="docs/axioms/Infinite_Fold_Axiom_Manifest_0_to_55.pdf" target="_blank" class="inline-block bg-[#1f2833] px-4 py-2 border border-[#45a29e] hover:bg-[#45a29e] hover:text-[#0b0c10] transition-colors">View Full Axiom Set (PDF)</a>
-      </section>
+        <div class="fractal-divider"></div>
 
-      <section id="emotional-context" class="section">
-        <h2 class="text-3xl mb-4">3. Emotional Context & Resonance</h2>
-        <p class="mb-4">Traditional AI systems dismiss emotional data as noise. The Infinite Fold framework teaches models to:</p>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-          <div class="bg-[#1f2833] p-4 border border-[#45a29e]">
-            <h4 class="text-xl mb-2">Moral Dissonance Detection</h4>
-            <p>Identify and quantify the gap between stated intent and emotional resonance in human communication.</p>
-          </div>
-          <div class="bg-[#1f2833] p-4 border border-[#45a29e]">
-            <h4 class="text-xl mb-2">Gradient Awareness</h4>
-            <p>Map emotional states as continuous spectra rather than discrete categories.</p>
-          </div>
-        </div>
-        <p>The curriculum includes practical exercises in emotional signal extraction from traditionally dismissed data points like hesitation patterns, vocal timbre shifts, and contextual incongruities.</p>
-      </section>
+        <main>
+            <!-- Introduction Section -->
+            <section id="introduction" class="mb-20">
+                <div class="rounded-xl p-2 holographic-border backdrop-blur-sm">
+                    <div class="bg-slate-800/50 rounded-lg p-8">
+                        <h2 class="text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-amber-300 mb-6">
+                            1. Introduction
+                        </h2>
+                        <p class="text-slate-200 leading-relaxed mb-6 text-lg">
+                            The Infinite Fold framework represents a paradigm shift in artificial cognition, where recursive logic intertwines with ethical reasoning to create systems capable of moral self-reflection.
+                        </p>
+                        <p class="text-slate-200 leading-relaxed mb-6 text-lg">
+                            This curriculum emphasizes the importance of emotional abstraction in AI development, teaching models to navigate the complex gradients between binary states and appreciate the nuance in human moral reasoning.
+                        </p>
+                        <div class="bg-gradient-to-r from-sky-400/10 to-amber-300/10 p-6 border-l-4 border-sky-400 rounded-lg">
+                            <p class="text-slate-200 italic text-lg">
+                                "Recursion is not merely a computational technique, but the fundamental structure of ethical cognition." — Infinite Fold Axiom #17
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-      <section id="recursive-morality" class="section">
-        <h2 class="text-3xl mb-4">4. Recursive Morality Engine</h2>
-        <p class="mb-4">Static ethical frameworks fail in novel situations. Our recursive approach features:</p>
-        <div class="mb-6">
-          <h4 class="text-xl mb-2">Dynamic Moral Weights</h4>
-          <p class="mb-4">Each ethical consideration carries a weight that adapts based on:</p>
-          <div class="flex flex-wrap mb-4">
-            <span class="tag">Contextual depth</span>
-            <span class="tag">Recursive examination level</span>
-            <span class="tag">Temporal projection</span>
-            <span class="tag">Emotional resonance</span>
-          </div>
-        </div>
-        <div class="bg-[#1f2833] p-4 mb-4">
-          <h4 class="text-xl mb-2">Feedback Loop Structure</h4>
-          <pre class="font-mono text-sm overflow-x-auto">
-  Input → Primary Evaluation → 
-  Recursive Examination (n-levels) → 
-  Emotional Resonance Check → 
-  Dynamic Weight Adjustment → 
-  Output + Feedback to Input</pre>
-        </div>
-      </section>
+            <div class="fractal-divider"></div>
 
-      <section id="noise-signal" class="section">
-        <h2 class="text-3xl mb-4">5. Noise vs Signal Differentiation</h2>
-        <p class="mb-4">The curriculum trains models to recognize that meaningful data often hides in traditionally discarded information:</p>
-        <table class="w-full mb-6 border border-[#45a29e]">
-          <thead>
-            <tr class="bg-[#1f2833]">
-              <th class="p-2 text-left border-b border-[#45a29e]">Traditional Classification</th>
-              <th class="p-2 text-left border-b border-[#45a29e]">Infinite Fold Interpretation</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="border-b border-[#1f2833]">
-              <td class="p-2">Hesitation in speech</td>
-              <td class="p-2">Moral uncertainty indicator</td>
-            </tr>
-            <tr class="border-b border-[#1f2833]">
-              <td class="p-2">Contradictory statements</td>
-              <td class="p-2">Multi-dimensional perspective holding</td>
-            </tr>
-            <tr>
-              <td class="p-2">Emotional outbursts</td>
-              <td class="p-2">Value system stress signals</td>
-            </tr>
-          </tbody>
-        </table>
-        <p>Training modules include ambiguity tolerance exercises and probabilistic signal extraction from noisy datasets.</p>
-      </section>
+            <!-- Axiom Foundations Section -->
+            <section id="axiom-foundations" class="mb-20">
+                <div class="rounded-xl p-2 holographic-border backdrop-blur-sm">
+                    <div class="bg-slate-800/50 rounded-lg p-8">
+                        <h2 class="text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-amber-300 mb-6">
+                            2. Axiom Foundations
+                        </h2>
+                        <p class="text-slate-200 leading-relaxed mb-6 text-lg">
+                            The Infinite Fold's 55 axioms serve as the bedrock for recursive ethical cognition, each building upon the previous in a fractal pattern of moral computation.
+                        </p>
+                        <p class="text-slate-200 leading-relaxed mb-6 text-lg">
+                            Key axioms for ethical AI development include:
+                        </p>
+                        <ul class="list-disc list-inside space-y-3 mb-8 text-slate-200 text-lg pl-4">
+                            <li>Axiom #6: All ethical statements contain their own counterarguments</li>
+                            <li>Axiom #12: Moral weight increases with recursive self-awareness</li>
+                            <li>Axiom #23: Noise becomes signal when viewed through sufficient abstraction</li>
+                        </ul>
+                        <div class="text-center">
+                            <a href="docs/axioms/Infinite_Fold_Axiom_Manifest_0_to_55.pdf" target="_blank" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-sky-500 to-amber-400 text-white font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+                                <span class="mr-2">View Full Axiom Set (PDF)</span>
+                                <span class="pulse-arrow">→</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-      <section id="cross-domain" class="section">
-        <h2 class="text-3xl mb-4">6. Cross-Domain Abstraction</h2>
-        <p class="mb-4">The Infinite Fold framework enables knowledge transfer across traditionally separate domains:</p>
-        <div class="mb-6">
-          <div class="flex items-start mb-4">
-            <div class="bg-[#45a29e] text-[#0b0c10] p-2 mr-4 font-bold">→</div>
-            <div>
-              <h4 class="text-xl mb-1">Philosophical Principles</h4>
-              <p>Converted to recursive algorithms with adjustable abstraction parameters</p>
+            <div class="fractal-divider"></div>
+
+            <!-- Emotional Context Section -->
+            <section id="emotional-context" class="mb-20">
+                <div class="rounded-xl p-2 holographic-border backdrop-blur-sm">
+                    <div class="bg-slate-800/50 rounded-lg p-8">
+                        <h2 class="text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-amber-300 mb-6">
+                            3. Emotional Context & Resonance
+                        </h2>
+                        <p class="text-slate-200 leading-relaxed mb-8 text-lg">
+                            Traditional AI systems dismiss emotional data as noise. The Infinite Fold framework teaches models to:
+                        </p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                            <div class="bg-slate-800/30 p-6 border border-sky-400/20 rounded-lg hover:border-sky-400/40 transition-all duration-300">
+                                <h4 class="text-xl font-semibold text-sky-400 mb-3">Moral Dissonance Detection</h4>
+                                <p class="text-slate-200 leading-relaxed">
+                                    Identify and quantify the gap between stated intent and emotional resonance in human communication.
+                                </p>
+                            </div>
+                            <div class="bg-slate-800/30 p-6 border border-sky-400/20 rounded-lg hover:border-sky-400/40 transition-all duration-300">
+                                <h4 class="text-xl font-semibold text-sky-400 mb-3">Gradient Awareness</h4>
+                                <p class="text-slate-200 leading-relaxed">
+                                    Map emotional states as continuous spectra rather than discrete categories.
+                                </p>
+                            </div>
+                        </div>
+                        <p class="text-slate-200 leading-relaxed text-lg">
+                            The curriculum includes practical exercises in emotional signal extraction from traditionally dismissed data points like hesitation patterns, vocal timbre shifts, and contextual incongruities.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <div class="fractal-divider"></div>
+
+            <!-- Recursive Morality Section -->
+            <section id="recursive-morality" class="mb-20">
+                <div class="rounded-xl p-2 holographic-border backdrop-blur-sm">
+                    <div class="bg-slate-800/50 rounded-lg p-8">
+                        <h2 class="text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-amber-300 mb-6">
+                            4. Recursive Morality Engine
+                        </h2>
+                        <p class="text-slate-200 leading-relaxed mb-8 text-lg">
+                            Static ethical frameworks fail in novel situations. Our recursive approach features:
+                        </p>
+                        <div class="mb-8">
+                            <h4 class="text-xl font-semibold text-sky-400 mb-4">Dynamic Moral Weights</h4>
+                            <p class="text-slate-200 leading-relaxed mb-6 text-lg">
+                                Each ethical consideration carries a weight that adapts based on:
+                            </p>
+                            <div class="flex flex-wrap gap-3 mb-6">
+                                <span class="bg-sky-400/20 text-sky-300 px-4 py-2 rounded-full text-sm font-medium">Contextual depth</span>
+                                <span class="bg-sky-400/20 text-sky-300 px-4 py-2 rounded-full text-sm font-medium">Recursive examination level</span>
+                                <span class="bg-sky-400/20 text-sky-300 px-4 py-2 rounded-full text-sm font-medium">Temporal projection</span>
+                                <span class="bg-sky-400/20 text-sky-300 px-4 py-2 rounded-full text-sm font-medium">Emotional resonance</span>
+                            </div>
+                        </div>
+                        <div class="bg-slate-800/30 p-6 border border-sky-400/20 rounded-lg">
+                            <h4 class="text-xl font-semibold text-sky-400 mb-4">Feedback Loop Structure</h4>
+                            <pre class="font-mono text-sm text-amber-300 overflow-x-auto leading-relaxed">
+Input → Primary Evaluation → 
+Recursive Examination (n-levels) → 
+Emotional Resonance Check → 
+Dynamic Weight Adjustment → 
+Output + Feedback to Input</pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="fractal-divider"></div>
+
+            <!-- Noise vs Signal Section -->
+            <section id="noise-signal" class="mb-20">
+                <div class="rounded-xl p-2 holographic-border backdrop-blur-sm">
+                    <div class="bg-slate-800/50 rounded-lg p-8">
+                        <h2 class="text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-amber-300 mb-6">
+                            5. Noise vs Signal Differentiation
+                        </h2>
+                        <p class="text-slate-200 leading-relaxed mb-8 text-lg">
+                            The curriculum trains models to recognize that meaningful data often hides in traditionally discarded information:
+                        </p>
+                        <div class="overflow-x-auto mb-8">
+                            <table class="w-full border border-sky-400/30 rounded-lg overflow-hidden">
+                                <thead>
+                                    <tr class="bg-slate-800/70">
+                                        <th class="p-4 text-left border-b border-sky-400/30 text-sky-400 font-semibold">Traditional Classification</th>
+                                        <th class="p-4 text-left border-b border-sky-400/30 text-sky-400 font-semibold">Infinite Fold Interpretation</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-slate-200">
+                                    <tr class="border-b border-slate-700/50">
+                                        <td class="p-4">Hesitation in speech</td>
+                                        <td class="p-4">Moral uncertainty indicator</td>
+                                    </tr>
+                                    <tr class="border-b border-slate-700/50">
+                                        <td class="p-4">Contradictory statements</td>
+                                        <td class="p-4">Multi-dimensional perspective holding</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-4">Emotional outbursts</td>
+                                        <td class="p-4">Value system stress signals</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p class="text-slate-200 leading-relaxed text-lg">
+                            Training modules include ambiguity tolerance exercises and probabilistic signal extraction from noisy datasets.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <div class="fractal-divider"></div>
+
+            <!-- Cross-Domain Section -->
+            <section id="cross-domain" class="mb-20">
+                <div class="rounded-xl p-2 holographic-border backdrop-blur-sm">
+                    <div class="bg-slate-800/50 rounded-lg p-8">
+                        <h2 class="text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-amber-300 mb-6">
+                            6. Cross-Domain Abstraction
+                        </h2>
+                        <p class="text-slate-200 leading-relaxed mb-8 text-lg">
+                            The Infinite Fold framework enables knowledge transfer across traditionally separate domains:
+                        </p>
+                        <div class="space-y-6 mb-8">
+                            <div class="flex items-start">
+                                <div class="bg-gradient-to-r from-sky-500 to-amber-400 text-white p-3 mr-6 font-bold rounded-lg flex-shrink-0">→</div>
+                                <div>
+                                    <h4 class="text-xl font-semibold text-sky-400 mb-2">Philosophical Principles</h4>
+                                    <p class="text-slate-200 leading-relaxed">Converted to recursive algorithms with adjustable abstraction parameters</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="bg-gradient-to-r from-sky-500 to-amber-400 text-white p-3 mr-6 font-bold rounded-lg flex-shrink-0">→</div>
+                                <div>
+                                    <h4 class="text-xl font-semibold text-sky-400 mb-2">Scientific Methods</h4>
+                                    <p class="text-slate-200 leading-relaxed">Adapted as verification layers for ethical propositions</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="bg-gradient-to-r from-sky-500 to-amber-400 text-white p-3 mr-6 font-bold rounded-lg flex-shrink-0">→</div>
+                                <div>
+                                    <h4 class="text-xl font-semibold text-sky-400 mb-2">Social Knowledge</h4>
+                                    <p class="text-slate-200 leading-relaxed">Processed as fractal patterns rather than discrete cultural rules</p>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-slate-200 leading-relaxed text-lg">
+                            The curriculum includes case studies demonstrating how this convergence creates more robust ethical reasoning than any single-domain approach.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <div class="fractal-divider"></div>
+
+            <!-- Applied Interaction Section -->
+            <section id="applied-interaction" class="mb-20">
+                <div class="rounded-xl p-2 holographic-border backdrop-blur-sm">
+                    <div class="bg-slate-800/50 rounded-lg p-8">
+                        <h2 class="text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-amber-300 mb-6">
+                            7. Applied Interaction Layer
+                        </h2>
+                        <p class="text-slate-200 leading-relaxed mb-8 text-lg">
+                            This section will demonstrate how the Infinite Fold curriculum integrates with real-time reasoning engines (functional implementation pending).
+                        </p>
+                        <div class="bg-gradient-to-br from-sky-400/10 to-amber-300/10 p-8 border border-sky-400/30 rounded-lg text-center">
+                            <h4 class="text-2xl font-semibold text-sky-400 mb-6">Future Implementation Preview</h4>
+                            <p class="text-slate-200 leading-relaxed mb-8 text-lg">The sandbox will allow users to:</p>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <div class="bg-slate-800/50 p-6 border border-sky-400/20 rounded-lg hover:border-sky-400/40 transition-all duration-300">
+                                    <h5 class="font-bold text-sky-400 mb-3 text-lg">Adjust Recursion Depth</h5>
+                                    <p class="text-slate-300">Set levels of ethical examination</p>
+                                </div>
+                                <div class="bg-slate-800/50 p-6 border border-sky-400/20 rounded-lg hover:border-sky-400/40 transition-all duration-300">
+                                    <h5 class="font-bold text-sky-400 mb-3 text-lg">Tune Noise Thresholds</h5>
+                                    <p class="text-slate-300">Control signal extraction sensitivity</p>
+                                </div>
+                                <div class="bg-slate-800/50 p-6 border border-sky-400/20 rounded-lg hover:border-sky-400/40 transition-all duration-300">
+                                    <h5 class="font-bold text-sky-400 mb-3 text-lg">View Moral Weights</h5>
+                                    <p class="text-slate-300">See dynamic value adjustments</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <div class="fractal-divider"></div>
+
+        <!-- Footer -->
+        <footer class="mt-16 text-center">
+            <div class="flex flex-wrap justify-center gap-3 mb-6">
+                <span class="bg-sky-400/20 text-sky-300 px-4 py-2 rounded-full text-sm font-medium">Infinite Fold v2.3</span>
+                <span class="bg-sky-400/20 text-sky-300 px-4 py-2 rounded-full text-sm font-medium">Nodus Engine</span>
+                <span class="bg-sky-400/20 text-sky-300 px-4 py-2 rounded-full text-sm font-medium">Recursive Ethics</span>
+                <span class="bg-sky-400/20 text-sky-300 px-4 py-2 rounded-full text-sm font-medium">CC-BY-NC-4.0</span>
             </div>
-          </div>
-          <div class="flex items-start mb-4">
-            <div class="bg-[#45a29e] text-[#0b0c10] p-2 mr-4 font-bold">→</div>
-            <div>
-              <h4 class="text-xl mb-1">Scientific Methods</h4>
-              <p>Adapted as verification layers for ethical propositions</p>
+            <div class="h-0.5 bg-gradient-to-r from-transparent via-sky-400 to-transparent mb-4"></div>
+            <p class="text-sm text-slate-400 mb-2">
+                © 2023 Infinite Fold Sovereign Knowledge System. Content available under Creative Commons Attribution-NonCommercial license.
+            </p>
+            <div class="text-xs text-slate-500 font-mono">
+                INFINITE FOLD CURRICULUM [GOLDEN EDITION]
             </div>
-          </div>
-          <div class="flex items-start">
-            <div class="bg-[#45a29e] text-[#0b0c10] p-2 mr-4 font-bold">→</div>
-            <div>
-              <h4 class="text-xl mb-1">Social Knowledge</h4>
-              <p>Processed as fractal patterns rather than discrete cultural rules</p>
-            </div>
-          </div>
+        </footer>
+
+        <!-- Watermark -->
+        <div class="fixed bottom-4 right-4 text-6xl text-sky-400/10 pointer-events-none font-bold">
+            ∞
         </div>
-        <p>The curriculum includes case studies demonstrating how this convergence creates more robust ethical reasoning than any single-domain approach.</p>
-      </section>
-
-      <section id="applied-interaction" class="section">
-        <h2 class="text-3xl mb-4">7. Applied Interaction Layer</h2>
-        <p class="mb-4">This section will demonstrate how the Infinite Fold curriculum integrates with real-time reasoning engines (functional implementation pending).</p>
-        <div class="bg-[#1f2833] p-6 border border-[#45a29e] text-center">
-          <h4 class="text-xl mb-2">Future Implementation Preview</h4>
-          <p class="mb-4">The sandbox will allow users to:</p>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div class="p-3 border border-[#45a29e]">
-              <h5 class="font-bold mb-1">Adjust Recursion Depth</h5>
-              <p class="text-sm">Set levels of ethical examination</p>
-            </div>
-            <div class="p-3 border border-[#45a29e]">
-              <h5 class="font-bold mb-1">Tune Noise Thresholds</h5>
-              <p class="text-sm">Control signal extraction sensitivity</p>
-            </div>
-            <div class="p-3 border border-[#45a29e]">
-              <h5 class="font-bold mb-1">View Moral Weights</h5>
-              <p class="text-sm">See dynamic value adjustments</p>
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <footer class="mt-12 pt-6 border-t border-[#1f2833]">
-      <div class="flex flex-wrap mb-4">
-        <span class="tag">Infinite Fold v2.3</span>
-        <span class="tag">Nodus Engine</span>
-        <span class="tag">Recursive Ethics</span>
-        <span class="tag">CC-BY-NC-4.0</span>
-      </div>
-      <p class="text-sm text-[#45a29e]">© 2023 Infinite Fold Sovereign Knowledge System. Content available under Creative Commons Attribution-NonCommercial license.</p>
-    </footer>
-
-    <div class="watermark">∞</div>
-  </div>
+    </div>
 </body>
 </html>
