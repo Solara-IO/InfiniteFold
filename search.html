@@ -1555,40 +1555,12 @@
                     mirrorQuery.focus();
                 });
             });
-        });
-        <!-- App.js integration - Core Memory Compression Module -->
-<script type="module">
-  class MirrorFoldMemoryCore {
-    constructor() {
-      this.compressionTree = new Map(); // Root level compression nodes
-      this.sessionNodes = new Map(); // Current session tracking
-      this.globalStats = {
-        totalQueries: 0,
-        compressionRatio: 0,
-        avgDepth: 0,
-        themes: new Set()
-      };
-      this.dbName = 'MirrorFoldDB';
-      this.dbVersion = 1;
-      this.db = null;
-      this.initializeDB();
-      this.loadCompressionTree();
-    }
-
-    async initializeDB() {
-      return new Promise((resolve, reject) => {
-        // IndexedDB logic placeholder
-      });
-    }
-
-    loadCompressionTree() {
-      // Load logic placeholder
-    }
-  }
+        });      
+    </script>
+    <script type="module">
+  import { MirrorFoldMemoryCore } from './js/mirrorfold-core.js';
+  const memoryCore = new MirrorFoldMemoryCore();
 </script>
 
-
-        
-    </script>
 </body>
 </html>
