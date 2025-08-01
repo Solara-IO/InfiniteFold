@@ -19,6 +19,8 @@
                         'spin-slow': 'spin 10s linear infinite',
                         'float': 'float 15s ease-in-out infinite',
                         'fade': 'fade 8s ease-in-out infinite',
+                        'ripple': 'ripple 3s linear infinite',
+                        'pulse-sharp': 'pulse-sharp 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                     },
                     keyframes: {
                         float: {
@@ -28,6 +30,14 @@
                         fade: {
                             '0%, 100%': { opacity: '0.5' },
                             '50%': { opacity: '1' },
+                        },
+                        ripple: {
+                            '0%': { transform: 'scale(1)', opacity: '0.6' },
+                            '100%': { transform: 'scale(1.5)', opacity: '0' },
+                        },
+                        'pulse-sharp': {
+                            '0%, 100%': { opacity: '1' },
+                            '50%': { opacity: '0.3' },
                         }
                     }
                 }
@@ -36,6 +46,7 @@
     </script>
     <link href="https://fonts.googleapis.com/css2?family=Philosopher:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
+        /* Existing styles remain unchanged */
         body {
             font-family: 'Philosopher', serif;
             background: radial-gradient(circle at center, #0f172a 0%, #020617 100%);
@@ -154,6 +165,229 @@
             50% { opacity: 0.5; }
             100% { opacity: 1; }
         }
+
+        /* ====================== */
+        /* NEW STYLES FOR ENHANCEMENTS */
+        /* ====================== */
+
+        /* Tone Resonance Graph */
+        .tone-graph-container {
+            position: relative;
+            height: 60px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+
+        .tone-graph {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+        }
+
+        .tone-bar {
+            width: 4px;
+            margin: 0 1px;
+            background: linear-gradient(to top, rgba(56, 189, 248, 0.8), rgba(234, 179, 8, 0.8));
+            border-radius: 2px;
+            transition: height 0.3s ease;
+        }
+
+        .tone-ripple {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.4) 0%, transparent 70%);
+            transform: scale(0);
+            opacity: 0;
+        }
+
+        .tone-pulse {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(234, 88, 12, 0.4) 0%, transparent 70%);
+            transform: scale(0);
+            opacity: 0;
+        }
+
+        /* Memory Compression Panel */
+        .memory-panel {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            border-radius: 0.75rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .memory-item {
+            padding: 0.5rem;
+            margin-bottom: 0.5rem;
+            border-left: 3px solid rgba(56, 189, 248, 0.5);
+            background: rgba(15, 23, 42, 0.4);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .memory-item:hover {
+            background: rgba(56, 189, 248, 0.1);
+            border-left: 3px solid rgba(234, 179, 8, 0.5);
+        }
+
+        .memory-theme {
+            font-weight: bold;
+            color: rgba(234, 179, 8, 0.8);
+            margin-bottom: 0.25rem;
+        }
+
+        .memory-queries {
+            font-size: 0.85rem;
+            color: rgba(156, 163, 175, 0.8);
+        }
+
+        /* Tone Metadata Display */
+        .tone-metadata {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tone-tag {
+            padding: 0.25rem 0.5rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            color: rgba(56, 189, 248, 0.9);
+        }
+
+        .tone-tag.urgent {
+            background: rgba(234, 88, 12, 0.1);
+            border: 1px solid rgba(234, 88, 12, 0.3);
+            color: rgba(234, 88, 12, 0.9);
+        }
+
+        .tone-tag.emotional {
+            background: rgba(217, 70, 239, 0.1);
+            border: 1px solid rgba(217, 70, 239, 0.3);
+            color: rgba(217, 70, 239, 0.9);
+        }
+
+        .tone-tag.inquisitive {
+            background: rgba(74, 222, 128, 0.1);
+            border: 1px solid rgba(74, 222, 128, 0.3);
+            color: rgba(74, 222, 128, 0.9);
+        }
+
+        /* Settings Toggle */
+        .settings-toggle {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            z-index: 50;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            border-radius: 9999px;
+            padding: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .settings-toggle:hover {
+            transform: rotate(30deg);
+            border-color: rgba(234, 179, 8, 0.5);
+        }
+
+        .settings-panel {
+            position: fixed;
+            bottom: 140px;
+            right: 20px;
+            z-index: 50;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            border-radius: 0.75rem;
+            padding: 1rem;
+            width: 280px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transform: translateY(20px);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        .settings-panel.open {
+            transform: translateY(0);
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .setting-item {
+            margin-bottom: 0.75rem;
+        }
+
+        .setting-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.25rem;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(71, 85, 105, 0.5);
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: rgba(226, 232, 240, 0.9);
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: rgba(56, 189, 248, 0.5);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
     </style>
     <!-- Google CSE Script -->
     <script async src="https://cse.google.com/cse.js?cx=a2ec05bde1c144f1b"></script>
@@ -167,6 +401,59 @@
         <button id="themeToggle" class="theme-toggle bg-slate-800/50 backdrop-blur-sm p-3 rounded-full border border-sky-400/30 hover:border-sky-400/50 shadow-lg">
             <i class="fas fa-moon text-sky-400 text-lg"></i>
         </button>
+    </div>
+
+    <!-- Settings Toggle and Panel -->
+    <div class="settings-toggle" id="settingsToggle">
+        <i class="fas fa-cog text-sky-400"></i>
+    </div>
+    
+    <div class="settings-panel" id="settingsPanel">
+        <h3 class="text-lg font-semibold mb-3 text-sky-400">MirrorFold Settings</h3>
+        
+        <div class="setting-item">
+            <div class="setting-label">
+                <span>Tone Visualization</span>
+                <label class="switch">
+                    <input type="checkbox" id="toneVisualizationToggle" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <p class="text-xs text-slate-400">Show tone resonance graph for queries</p>
+        </div>
+        
+        <div class="setting-item">
+            <div class="setting-label">
+                <span>Tone Metadata</span>
+                <label class="switch">
+                    <input type="checkbox" id="toneMetadataToggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <p class="text-xs text-slate-400">Display inferred tone tags</p>
+        </div>
+        
+        <div class="setting-item">
+            <div class="setting-label">
+                <span>Memory Compression</span>
+                <label class="switch">
+                    <input type="checkbox" id="memoryCompressionToggle" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <p class="text-xs text-slate-400">Store and analyze query patterns</p>
+        </div>
+        
+        <div class="setting-item">
+            <div class="setting-label">
+                <span>Cross-Thread Reassessment</span>
+                <label class="switch">
+                    <input type="checkbox" id="crossThreadToggle" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <p class="text-xs text-slate-400">Surface related prior queries</p>
+        </div>
     </div>
 
     <!-- Navigation -->
@@ -217,6 +504,17 @@
                     <p class="italic text-slate-400">Search that reflects before it retrieves.</p>
                 </div>
 
+                <!-- Memory Compression Panel (hidden by default) -->
+                <div id="memoryPanel" class="memory-panel hidden">
+                    <h4 class="text-sm font-semibold mb-2 text-sky-400">RECOGNIZED PATTERNS</h4>
+                    <div id="memoryItems"></div>
+                </div>
+
+                <!-- Tone Visualization Graph (hidden by default) -->
+                <div id="toneGraphContainer" class="tone-graph-container hidden">
+                    <div id="toneGraph" class="tone-graph"></div>
+                </div>
+
                 <!-- MirrorFold Search Form -->
                 <form id="mirrorFoldForm" class="mb-8">
                     <div class="search-box rounded-full p-1 flex items-center shadow-lg">
@@ -247,6 +545,12 @@
                         </button>
                     </div>
                 </form>
+
+                <!-- Tone Metadata Display (hidden by default) -->
+                <div id="toneMetadata" class="hidden mb-4">
+                    <div class="text-xs text-slate-400 mb-1">INFERRED TONE:</div>
+                    <div class="tone-metadata" id="toneTags"></div>
+                </div>
 
                 <!-- Mirror Confirmation Section (hidden by default) -->
                 <div id="mirrorConfirmation" class="hidden rounded-xl p-6 mb-8 mirror-confirmation">
@@ -317,7 +621,736 @@
         </div>
     </footer>
 
-    <!-- Floating particles animation -->
+    <!-- ====================== -->
+    <!-- NEW SCRIPTS FOR ENHANCEMENTS -->
+    <!-- ====================== -->
+    <script>
+        // Memory Compression Layer
+        class MemoryCompressor {
+            constructor() {
+                this.sessionQueries = [];
+                this.compressedThemes = [];
+                this.sessionId = Date.now().toString();
+                this.loadFromLocalStorage();
+            }
+
+            addQuery(query, toneAnalysis) {
+                const queryObj = {
+                    text: query,
+                    timestamp: new Date().toISOString(),
+                    tone: toneAnalysis,
+                    sessionId: this.sessionId
+                };
+                
+                this.sessionQueries.push(queryObj);
+                this.compressMemory();
+                this.saveToLocalStorage();
+            }
+
+            compressMemory() {
+                // Simple theme extraction based on keywords
+                const themes = {
+                    'recursion': ['recursion', 'recursive', 'self-reference'],
+                    'search': ['search', 'find', 'look up', 'query'],
+                    'technology': ['AI', 'artificial intelligence', 'machine learning', 'algorithm'],
+                    'philosophy': ['meaning', 'purpose', 'truth', 'knowledge']
+                };
+
+                // Count occurrences of theme keywords in queries
+                const themeCounts = {};
+                for (const theme in themes) {
+                    themeCounts[theme] = 0;
+                    for (const keyword of themes[theme]) {
+                        this.sessionQueries.forEach(query => {
+                            if (query.text.toLowerCase().includes(keyword.toLowerCase())) {
+                                themeCounts[theme]++;
+                            }
+                        });
+                    }
+                }
+
+                // Create compressed themes with sample queries
+                this.compressedThemes = [];
+                for (const theme in themeCounts) {
+                    if (themeCounts[theme] > 0) {
+                        const sampleQueries = this.sessionQueries
+                            .filter(query => {
+                                return themes[theme].some(keyword => 
+                                    query.text.toLowerCase().includes(keyword.toLowerCase())
+                                );
+                            })
+                            .slice(0, 3)
+                            .map(q => q.text);
+                            
+                        this.compressedThemes.push({
+                            theme: theme,
+                            count: themeCounts[theme],
+                            sampleQueries: sampleQueries,
+                            lastTimestamp: new Date().toISOString()
+                        });
+                    }
+                }
+
+                // Also include compressed themes from previous sessions
+                if (this.previousSessions) {
+                    this.previousSessions.forEach(session => {
+                        session.compressedThemes.forEach(theme => {
+                            const existingTheme = this.compressedThemes.find(t => t.theme === theme.theme);
+                            if (existingTheme) {
+                                existingTheme.count += theme.count;
+                                // Merge sample queries, keeping unique ones
+                                theme.sampleQueries.forEach(q => {
+                                    if (!existingTheme.sampleQueries.includes(q)) {
+                                        existingTheme.sampleQueries.push(q);
+                                        if (existingTheme.sampleQueries.length > 3) {
+                                            existingTheme.sampleQueries.shift();
+                                        }
+                                    }
+                                });
+                            } else {
+                                this.compressedThemes.push(theme);
+                            }
+                        });
+                    });
+                }
+            }
+
+            getRelatedQueries(currentQuery) {
+                if (!this.compressedThemes.length) return [];
+
+                // Find themes that match the current query
+                const relatedThemes = this.compressedThemes.filter(theme => {
+                    return theme.sampleQueries.some(query => 
+                        this.similarityScore(query, currentQuery) > 0.3
+                    );
+                });
+
+                // Get sample queries from related themes
+                const relatedQueries = [];
+                relatedThemes.forEach(theme => {
+                    relatedQueries.push(...theme.sampleQueries);
+                });
+
+                // Remove duplicates and the current query
+                const uniqueQueries = [...new Set(relatedQueries)].filter(q => q !== currentQuery);
+
+                return uniqueQueries.slice(0, 5); // Return max 5 related queries
+            }
+
+            similarityScore(str1, str2) {
+                // Simple similarity score based on shared words
+                const words1 = str1.toLowerCase().split(/\s+/);
+                const words2 = str2.toLowerCase().split(/\s+/);
+                
+                const intersection = words1.filter(word => words2.includes(word));
+                return intersection.length / Math.max(words1.length, words2.length);
+            }
+
+            saveToLocalStorage() {
+                const data = {
+                    sessionId: this.sessionId,
+                    sessionQueries: this.sessionQueries,
+                    compressedThemes: this.compressedThemes,
+                    timestamp: new Date().toISOString()
+                };
+
+                // Get existing sessions
+                let sessions = JSON.parse(localStorage.getItem('mirrorFoldMemory')) || [];
+                
+                // Remove previous session with same ID if exists
+                sessions = sessions.filter(s => s.sessionId !== this.sessionId);
+                
+                // Add current session
+                sessions.push(data);
+                
+                // Keep only last 5 sessions
+                if (sessions.length > 5) {
+                    sessions = sessions.slice(sessions.length - 5);
+                }
+                
+                localStorage.setItem('mirrorFoldMemory', JSON.stringify(sessions));
+            }
+
+            loadFromLocalStorage() {
+                const sessions = JSON.parse(localStorage.getItem('mirrorFoldMemory')) || [];
+                this.previousSessions = sessions.filter(s => s.sessionId !== this.sessionId);
+            }
+        }
+
+        // LETRM (Linguistic Emotional Tone Recognition Model)
+        class LETRM {
+            analyze(text) {
+                const analysis = {
+                    emotionalTone: this.detectEmotionalTone(text),
+                    urgencyLevel: this.detectUrgency(text),
+                    intentType: this.detectIntent(text),
+                    punctuationImpact: this.analyzePunctuation(text),
+                    capitalizationImpact: this.analyzeCapitalization(text),
+                    wordChoiceScore: this.analyzeWordChoice(text)
+                };
+
+                // Calculate overall tone score
+                analysis.overallTone = this.calculateOverallTone(analysis);
+
+                return analysis;
+            }
+
+            detectEmotionalTone(text) {
+                const emotionalWords = {
+                    positive: ['love', 'happy', 'joy', 'excited', 'wonderful', 'great', 'amazing', 'best'],
+                    negative: ['hate', 'angry', 'sad', 'upset', 'terrible', 'worst', 'awful', 'bad'],
+                    anxious: ['worry', 'anxious', 'nervous', 'scared', 'fear', 'concerned', 'stress'],
+                    curious: ['why', 'how', 'what', 'when', 'where', 'explain', 'understand', 'learn']
+                };
+
+                const scores = {
+                    positive: 0,
+                    negative: 0,
+                    anxious: 0,
+                    curious: 0
+                };
+
+                const words = text.toLowerCase().split(/\s+/);
+                for (const word of words) {
+                    for (const tone in emotionalWords) {
+                        if (emotionalWords[tone].includes(word)) {
+                            scores[tone]++;
+                        }
+                    }
+                }
+
+                // Determine dominant tone
+                let maxScore = 0;
+                let dominantTone = 'neutral';
+                for (const tone in scores) {
+                    if (scores[tone] > maxScore) {
+                        maxScore = scores[tone];
+                        dominantTone = tone;
+                    }
+                }
+
+                return maxScore > 0 ? dominantTone : 'neutral';
+            }
+
+            detectUrgency(text) {
+                // Urgency indicators
+                const urgencyMarkers = [
+                    '!', 'urgent', 'now', 'immediately', 'asap', 'quick', 'fast', 'emergency',
+                    'important', 'critical', 'right away', 'hurry'
+                ];
+
+                let score = 0;
+                urgencyMarkers.forEach(marker => {
+                    if (text.toLowerCase().includes(marker.toLowerCase())) {
+                        score++;
+                    }
+                });
+
+                // Count exclamation marks
+                const exclamationCount = (text.match(/!/g) || []).length;
+                score += Math.min(exclamationCount, 3); // Cap at 3
+
+                // All caps words
+                const allCapsWords = text.split(/\s+/).filter(word => word === word.toUpperCase() && word.length > 1);
+                score += Math.min(allCapsWords.length, 2); // Cap at 2
+
+                if (score >= 5) return 'high';
+                if (score >= 2) return 'medium';
+                return 'low';
+            }
+
+            detectIntent(text) {
+                if (text.endsWith('?')) {
+                    return 'question';
+                }
+
+                const questionWords = ['who', 'what', 'when', 'where', 'why', 'how', 'can', 'could', 'would', 'should'];
+                const firstWord = text.split(/\s+/)[0].toLowerCase();
+                if (questionWords.includes(firstWord)) {
+                    return 'question';
+                }
+
+                const commandWords = ['find', 'search', 'look up', 'show', 'give', 'tell', 'explain'];
+                if (commandWords.some(word => text.toLowerCase().startsWith(word.toLowerCase()))) {
+                    return 'command';
+                }
+
+                return 'statement';
+            }
+
+            analyzePunctuation(text) {
+                const punctuationCount = {
+                    '!': (text.match(/!/g) || []).length,
+                    '?': (text.match(/\?/g) || []).length,
+                    '.': (text.match(/\./g) || []).length,
+                    ',': (text.match(/,/g) || []).length
+                };
+
+                let score = 0;
+                score += Math.min(punctuationCount['!'], 3); // Max 3 points for !
+                score += Math.min(punctuationCount['?'], 2); // Max 2 points for ?
+                score -= Math.min(punctuationCount['.'], 3); // Subtract for many periods
+                score = Math.max(0, Math.min(score, 5)); // Keep between 0-5
+
+                return score;
+            }
+
+            analyzeCapitalization(text) {
+                // Count words that are all caps
+                const words = text.split(/\s+/);
+                const allCapsWords = words.filter(word => word === word.toUpperCase() && word.length > 1);
+                
+                // Count capitalized words (not first word of sentence)
+                let capitalizedWords = 0;
+                for (let i = 1; i < words.length; i++) {
+                    if (words[i][0] === words[i][0].toUpperCase() && words[i][0] !== words[i][0].toLowerCase()) {
+                        capitalizedWords++;
+                    }
+                }
+
+                let score = Math.min(allCapsWords.length * 2, 4); // Max 4 points for all caps
+                score += Math.min(capitalizedWords, 3); // Max 3 points for other caps
+                return Math.min(score, 5); // Cap at 5
+            }
+
+            analyzeWordChoice(text) {
+                const words = text.toLowerCase().split(/\s+/);
+                const wordCount = words.length;
+                
+                // Count emotional words
+                const emotionalWords = [
+                    'love', 'hate', 'happy', 'sad', 'angry', 'joy', 'fear', 'worry', 
+                    'excited', 'upset', 'terrible', 'wonderful', 'amazing', 'awful'
+                ];
+                const emotionalCount = words.filter(word => emotionalWords.includes(word)).length;
+                
+                // Count intensifiers
+                const intensifiers = ['very', 'really', 'extremely', 'absolutely', 'completely'];
+                const intensifierCount = words.filter(word => intensifiers.includes(word)).length;
+                
+                // Count qualifiers
+                const qualifiers = ['maybe', 'perhaps', 'possibly', 'might', 'could'];
+                const qualifierCount = words.filter(word => qualifiers.includes(word)).length;
+                
+                // Calculate score
+                let score = 0;
+                if (wordCount > 0) {
+                    score += (emotionalCount / wordCount) * 3;
+                    score += (intensifierCount / wordCount) * 2;
+                    score -= (qualifierCount / wordCount) * 1;
+                }
+                
+                return Math.max(0, Math.min(score, 5)); // Keep between 0-5
+            }
+
+            calculateOverallTone(analysis) {
+                let score = 0;
+                
+                // Emotional tone
+                if (analysis.emotionalTone === 'positive') score += 2;
+                else if (analysis.emotionalTone === 'negative') score -= 1;
+                else if (analysis.emotionalTone === 'anxious') score -= 2;
+                else if (analysis.emotionalTone === 'curious') score += 1;
+                
+                // Urgency
+                if (analysis.urgencyLevel === 'high') score += 3;
+                else if (analysis.urgencyLevel === 'medium') score += 1;
+                
+                // Intent
+                if (analysis.intentType === 'question') score += 1;
+                else if (analysis.intentType === 'command') score += 2;
+                
+                // Add other factors
+                score += analysis.punctuationImpact * 0.5;
+                score += analysis.capitalizationImpact * 0.5;
+                score += analysis.wordChoiceScore * 0.5;
+                
+                // Normalize to -5 to 5 scale
+                score = Math.max(-5, Math.min(score, 5));
+                
+                // Categorize
+                if (score >= 3) return 'intense';
+                if (score >= 1) return 'engaged';
+                if (score <= -3) return 'distressed';
+                if (score <= -1) return 'reserved';
+                return 'neutral';
+            }
+        }
+
+        // Tone Visualization
+        class ToneVisualizer {
+            constructor(containerId) {
+                this.container = document.getElementById(containerId);
+                this.graph = document.createElement('div');
+                this.graph.className = 'tone-graph';
+                this.container.appendChild(this.graph);
+                
+                this.barCount = 30;
+                this.bars = [];
+                this.ripples = [];
+                this.pulses = [];
+                
+                this.initBars();
+            }
+            
+            initBars() {
+                for (let i = 0; i < this.barCount; i++) {
+                    const bar = document.createElement('div');
+                    bar.className = 'tone-bar';
+                    bar.style.height = '2px';
+                    this.graph.appendChild(bar);
+                    this.bars.push(bar);
+                }
+            }
+            
+            visualizeTone(toneAnalysis) {
+                // Clear previous animations
+                this.graph.innerHTML = '';
+                this.bars = [];
+                this.initBars();
+                
+                const overallTone = toneAnalysis.overallTone;
+                const urgency = toneAnalysis.urgencyLevel;
+                const emotionalTone = toneAnalysis.emotionalTone;
+                
+                // Determine animation pattern based on tone
+                if (overallTone === 'intense' || urgency === 'high') {
+                    this.createErraticPulsePattern(emotionalTone);
+                } else if (overallTone === 'engaged' || emotionalTone === 'curious') {
+                    this.createRhythmicWavePattern();
+                } else if (overallTone === 'distressed' || emotionalTone === 'negative') {
+                    this.createSharpPulsePattern();
+                } else if (overallTone === 'reserved' || emotionalTone === 'neutral') {
+                    this.createGentleRipplePattern();
+                } else {
+                    this.createCalmRipplePattern();
+                }
+            }
+            
+            createCalmRipplePattern() {
+                // Create ripple effect
+                const ripple = document.createElement('div');
+                ripple.className = 'tone-ripple';
+                this.graph.appendChild(ripple);
+                
+                // Animate ripple
+                setTimeout(() => {
+                    ripple.style.animation = 'ripple 3s linear forwards';
+                }, 100);
+                
+                // Gentle wave pattern for bars
+                this.bars.forEach((bar, i) => {
+                    const delay = i * 0.1;
+                    const height = 2 + Math.sin(i * 0.3) * 10;
+                    
+                    setTimeout(() => {
+                        bar.style.transition = 'height 0.8s ease-in-out';
+                        bar.style.height = `${height}px`;
+                        
+                        // Continuous gentle movement
+                        setInterval(() => {
+                            const newHeight = 2 + Math.sin(Date.now() * 0.002 + i) * 10;
+                            bar.style.height = `${newHeight}px`;
+                        }, 100);
+                    }, delay * 100);
+                });
+            }
+            
+            createGentleRipplePattern() {
+                // Multiple ripples
+                for (let i = 0; i < 3; i++) {
+                    const ripple = document.createElement('div');
+                    ripple.className = 'tone-ripple';
+                    ripple.style.width = `${100 - i * 30}%`;
+                    ripple.style.height = `${100 - i * 30}%`;
+                    ripple.style.left = `${i * 15}%`;
+                    this.graph.appendChild(ripple);
+                    
+                    setTimeout(() => {
+                        ripple.style.animation = `ripple ${3 - i}s linear forwards`;
+                    }, i * 800);
+                }
+                
+                // Subtle bar movement
+                this.bars.forEach((bar, i) => {
+                    const delay = i * 0.05;
+                    const height = 2 + Math.sin(i * 0.5) * 8;
+                    
+                    setTimeout(() => {
+                        bar.style.transition = 'height 0.5s ease-in-out';
+                        bar.style.height = `${height}px`;
+                        
+                        setInterval(() => {
+                            const newHeight = 2 + Math.sin(Date.now() * 0.003 + i) * 8;
+                            bar.style.height = `${newHeight}px`;
+                        }, 100);
+                    }, delay * 100);
+                });
+            }
+            
+            createRhythmicWavePattern() {
+                // Clear bars and create wave pattern
+                this.bars.forEach((bar, i) => {
+                    const delay = i * 0.05;
+                    const height = 2 + Math.sin(i * 0.5) * 30;
+                    
+                    setTimeout(() => {
+                        bar.style.transition = 'height 0.3s ease-in-out';
+                        bar.style.height = `${height}px`;
+                        
+                        // Continuous wave movement
+                        setInterval(() => {
+                            const newHeight = 2 + Math.sin(Date.now() * 0.005 + i * 0.3) * 30;
+                            bar.style.height = `${newHeight}px`;
+                        }, 50);
+                    }, delay * 100);
+                });
+            }
+            
+            createSharpPulsePattern() {
+                // Create pulse effect
+                const pulse = document.createElement('div');
+                pulse.className = 'tone-pulse';
+                this.graph.appendChild(pulse);
+                
+                setTimeout(() => {
+                    pulse.style.animation = 'ripple 1.5s linear forwards';
+                }, 100);
+                
+                // Random sharp pulses in bars
+                this.bars.forEach((bar, i) => {
+                    setInterval(() => {
+                        if (Math.random() > 0.7) {
+                            const height = 2 + Math.random() * 40;
+                            bar.style.transition = 'height 0.1s ease-out';
+                            bar.style.height = `${height}px`;
+                            
+                            setTimeout(() => {
+                                bar.style.transition = 'height 0.5s ease-in';
+                                bar.style.height = '2px';
+                            }, 100);
+                        }
+                    }, 500 + Math.random() * 1500);
+                });
+            }
+            
+            createErraticPulsePattern(emotionalTone) {
+                // Color pulses based on emotional tone
+                const pulseColor = emotionalTone === 'negative' ? 'rgba(234, 88, 12, 0.4)' : 'rgba(234, 179, 8, 0.4)';
+                
+                // Create multiple pulses
+                for (let i = 0; i < 5; i++) {
+                    const pulse = document.createElement('div');
+                    pulse.className = 'tone-pulse';
+                    pulse.style.background = pulseColor;
+                    pulse.style.width = `${80 - i * 15}%`;
+                    pulse.style.height = `${80 - i * 15}%`;
+                    pulse.style.left = `${10 + i * 7}%`;
+                    this.graph.appendChild(pulse);
+                    
+                    setTimeout(() => {
+                        pulse.style.animation = `ripple ${1 + i * 0.5}s linear forwards`;
+                    }, i * 300);
+                }
+                
+                // Erratic bar movement
+                this.bars.forEach((bar, i) => {
+                    bar.style.animation = 'pulse-sharp 1.5s infinite';
+                    bar.style.animationDelay = `${i * 0.05}s`;
+                    
+                    const baseHeight = 2 + Math.random() * 10;
+                    bar.style.height = `${baseHeight}px`;
+                    
+                    setInterval(() => {
+                        const height = baseHeight + Math.random() * 30;
+                        bar.style.transition = 'height 0.1s ease-out';
+                        bar.style.height = `${height}px`;
+                        
+                        setTimeout(() => {
+                            bar.style.transition = 'height 0.3s ease-in';
+                            bar.style.height = `${baseHeight}px`;
+                        }, 100 + Math.random() * 200);
+                    }, 300 + Math.random() * 1200);
+                });
+            }
+        }
+
+        // Main Application
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize components
+            const memoryCompressor = new MemoryCompressor();
+            const letrm = new LETRM();
+            const toneVisualizer = new ToneVisualizer('toneGraph');
+            
+            // DOM elements
+            const mirrorQuery = document.getElementById('mirrorQuery');
+            const toneGraphContainer = document.getElementById('toneGraphContainer');
+            const toneMetadata = document.getElementById('toneMetadata');
+            const toneTags = document.getElementById('toneTags');
+            const memoryPanel = document.getElementById('memoryPanel');
+            const memoryItems = document.getElementById('memoryItems');
+            const settingsToggle = document.getElementById('settingsToggle');
+            const settingsPanel = document.getElementById('settingsPanel');
+            const toneVisualizationToggle = document.getElementById('toneVisualizationToggle');
+            const toneMetadataToggle = document.getElementById('toneMetadataToggle');
+            const memoryCompressionToggle = document.getElementById('memoryCompressionToggle');
+            const crossThreadToggle = document.getElementById('crossThreadToggle');
+            
+            // Settings panel toggle
+            settingsToggle.addEventListener('click', function() {
+                settingsPanel.classList.toggle('open');
+            });
+            
+            // Close settings when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!settingsPanel.contains(e.target) && e.target !== settingsToggle) {
+                    settingsPanel.classList.remove('open');
+                }
+            });
+            
+            // Query input handler
+            mirrorQuery.addEventListener('input', function() {
+                const query = mirrorQuery.value.trim();
+                
+                if (query.length > 3) {
+                    // Analyze tone
+                    const toneAnalysis = letrm.analyze(query);
+                    
+                    // Show tone visualization if enabled
+                    if (toneVisualizationToggle.checked) {
+                        toneGraphContainer.classList.remove('hidden');
+                        toneVisualizer.visualizeTone(toneAnalysis);
+                    } else {
+                        toneGraphContainer.classList.add('hidden');
+                    }
+                    
+                    // Show tone metadata if enabled
+                    if (toneMetadataToggle.checked) {
+                        toneMetadata.classList.remove('hidden');
+                        
+                        // Clear previous tags
+                        toneTags.innerHTML = '';
+                        
+                        // Add tags based on analysis
+                        if (toneAnalysis.overallTone !== 'neutral') {
+                            const toneTag = document.createElement('span');
+                            toneTag.className = 'tone-tag';
+                            toneTag.textContent = toneAnalysis.overallTone;
+                            toneTags.appendChild(toneTag);
+                        }
+                        
+                        if (toneAnalysis.urgencyLevel === 'high') {
+                            const urgentTag = document.createElement('span');
+                            urgentTag.className = 'tone-tag urgent';
+                            urgentTag.textContent = 'urgent';
+                            toneTags.appendChild(urgentTag);
+                        }
+                        
+                        if (toneAnalysis.emotionalTone !== 'neutral') {
+                            const emotionalTag = document.createElement('span');
+                            emotionalTag.className = `tone-tag emotional`;
+                            emotionalTag.textContent = toneAnalysis.emotionalTone;
+                            toneTags.appendChild(emotionalTag);
+                        }
+                        
+                        if (toneAnalysis.intentType === 'question') {
+                            const inquisitiveTag = document.createElement('span');
+                            inquisitiveTag.className = 'tone-tag inquisitive';
+                            inquisitiveTag.textContent = 'inquisitive';
+                            toneTags.appendChild(inquisitiveTag);
+                        }
+                    } else {
+                        toneMetadata.classList.add('hidden');
+                    }
+                    
+                    // Show memory panel if enabled and there are related queries
+                    if (memoryCompressionToggle.checked && memoryCompressor.compressedThemes.length > 0) {
+                        const relatedQueries = memoryCompressor.getRelatedQueries(query);
+                        
+                        if (relatedQueries.length > 0) {
+                            memoryPanel.classList.remove('hidden');
+                            memoryItems.innerHTML = '';
+                            
+                            // Group by theme
+                            const themes = {};
+                            memoryCompressor.compressedThemes.forEach(theme => {
+                                theme.sampleQueries.forEach(q => {
+                                    if (relatedQueries.includes(q)) {
+                                        if (!themes[theme.theme]) {
+                                            themes[theme.theme] = [];
+                                        }
+                                        themes[theme.theme].push(q);
+                                    }
+                                });
+                            });
+                            
+                            // Add to panel
+                            for (const theme in themes) {
+                                const themeDiv = document.createElement('div');
+                                themeDiv.className = 'memory-item';
+                                
+                                const themeTitle = document.createElement('div');
+                                themeTitle.className = 'memory-theme';
+                                themeTitle.textContent = theme.charAt(0).toUpperCase() + theme.slice(1);
+                                
+                                const queriesDiv = document.createElement('div');
+                                queriesDiv.className = 'memory-queries';
+                                themes[theme].forEach(q => {
+                                    const queryDiv = document.createElement('div');
+                                    queryDiv.textContent = `"${q}"`;
+                                    queriesDiv.appendChild(queryDiv);
+                                });
+                                
+                                themeDiv.appendChild(themeTitle);
+                                themeDiv.appendChild(queriesDiv);
+                                memoryItems.appendChild(themeDiv);
+                                
+                                // Click handler to use this query
+                                themeDiv.addEventListener('click', function() {
+                                    mirrorQuery.value = themes[theme][0];
+                                    mirrorQuery.dispatchEvent(new Event('input'));
+                                });
+                            }
+                        } else {
+                            memoryPanel.classList.add('hidden');
+                        }
+                    } else {
+                        memoryPanel.classList.add('hidden');
+                    }
+                } else {
+                    // Hide all tone and memory elements when query is too short
+                    toneGraphContainer.classList.add('hidden');
+                    toneMetadata.classList.add('hidden');
+                    memoryPanel.classList.add('hidden');
+                }
+            });
+            
+            // Existing form submission handler (modified to use memory compression)
+            const mirrorFoldForm = document.getElementById('mirrorFoldForm');
+            mirrorFoldForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const query = mirrorQuery.value.trim();
+                
+                if (query) {
+                    // Analyze tone
+                    const toneAnalysis = letrm.analyze(query);
+                    
+                    // Store in memory if enabled
+                    if (memoryCompressionToggle.checked) {
+                        memoryCompressor.addQuery(query, toneAnalysis);
+                    }
+                    
+                    // Rest of existing form submission logic...
+                    // (Keep all the existing confirmation and search logic)
+                }
+            });
+            
+            // Rest of existing event listeners and initialization...
+            // (Keep all the existing code for theme toggle, voice search, etc.)
+        });
+    </script>
+
+    <!-- Original Scripts (remain unchanged) -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const container = document.body;
