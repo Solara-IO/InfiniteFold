@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>INFINITE FOLD - Search Portal</title>
+    <title>INFINITE FOLD - MirrorFold Search</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
@@ -127,7 +127,36 @@
         .quote-2 { animation: rotate-quotes 16s infinite 4s; }
         .quote-3 { animation: rotate-quotes 16s infinite 8s; }
         .quote-4 { animation: rotate-quotes 16s infinite 12s; }
+
+        /* MirrorFold specific styles */
+        .mirror-confirmation {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+        }
+
+        .explore-suggestion {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .explore-suggestion:hover {
+            transform: translateY(-2px);
+            background: rgba(56, 189, 248, 0.1);
+        }
+
+        .voice-active {
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
     </style>
+    <!-- Google CSE Script -->
+    <script async src="https://cse.google.com/cse.js?cx=a2ec05bde1c144f1b"></script>
 </head>
 <body class="text-slate-200 min-h-screen relative overflow-x-hidden dark">
     <!-- Golden Spiral Background -->
@@ -172,46 +201,97 @@
                 <div class="absolute inset-0 rounded-full border-2 border-sky-400/30 animate-pulse pointer-events-none"></div>
             </div>
             <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-amber-300 mb-4 tracking-tight">
-                INFINITE SEARCH
+                MIRRORFOLD
             </h1>
             <p class="text-xl sm:text-2xl text-slate-300 font-light tracking-wider">
-                <span class="bg-slate-800/50 px-4 py-2 rounded-full">Recursive Knowledge Portal</span>
+                <span class="bg-slate-800/50 px-4 py-2 rounded-full">Recursive Search Portal</span>
             </p>
         </header>
 
-        <!-- Search Section -->
+        <!-- MirrorFold Search Section -->
         <section class="mb-20">
             <div class="search-container">
-                <!-- DuckDuckGo Search Form -->
-                <form method="GET" action="https://duckduckgo.com/" class="mb-8">
+                <!-- MirrorFold Search Heading -->
+                <div class="text-center mb-8">
+                    <h1 class="text-3xl font-bold text-sky-400 mb-2">🔍 MirrorFold: The Recursive Search Engine</h1>
+                    <p class="italic text-slate-400">Search that reflects before it retrieves.</p>
+                </div>
+
+                <!-- MirrorFold Search Form -->
+                <form id="mirrorFoldForm" class="mb-8">
                     <div class="search-box rounded-full p-1 flex items-center shadow-lg">
                         <input 
                             type="text" 
-                            name="q" 
-                            placeholder="Fold your query into the infinite..." 
+                            id="mirrorQuery"
+                            placeholder="Fold your query into the infinite..."
                             class="search-input w-full px-6 py-4 rounded-full text-lg"
                             autocomplete="off"
                             autocorrect="off"
                             autocapitalize="off"
                             spellcheck="false"
+                            required
                         >
-                        <button type="submit" class="search-button bg-gradient-to-r from-sky-500 to-amber-400 text-white px-6 py-3 rounded-full ml-2 shadow-md hover:shadow-lg">
-                            <i class="fas fa-search mr-2"></i> Search
+                        <button 
+                            type="button" 
+                            id="voiceSearchBtn"
+                            class="bg-slate-700/50 hover:bg-slate-700/70 text-white px-4 py-3 rounded-full ml-1 mr-1 border border-sky-400/30 hover:border-sky-400/50 transition-all duration-300"
+                            title="Voice Search"
+                        >
+                            <i class="fas fa-microphone"></i>
+                        </button>
+                        <button 
+                            type="submit" 
+                            class="search-button bg-gradient-to-r from-sky-500 to-amber-400 text-white px-6 py-3 rounded-full ml-1 shadow-md hover:shadow-lg"
+                        >
+                            <i class="fas fa-search mr-2"></i> Reflect
                         </button>
                     </div>
-                    <input type="hidden" name="ia" value="web">
-                    <input type="hidden" name="sites" value="infinitefold.com">
                 </form>
 
-                <!-- Embedded DuckDuckGo Search Results -->
+                <!-- Mirror Confirmation Section (hidden by default) -->
+                <div id="mirrorConfirmation" class="hidden rounded-xl p-6 mb-8 mirror-confirmation">
+                    <p class="text-lg mb-4" id="confirmationText"></p>
+                    <div class="flex flex-wrap justify-center gap-4">
+                        <button id="proceedSearch" class="bg-gradient-to-r from-sky-500 to-amber-400 text-white px-6 py-3 rounded-full shadow-md hover:shadow-lg transition-all duration-300">
+                            <i class="fas fa-check-circle mr-2"></i> Proceed
+                        </button>
+                        <button id="refineSearch" class="bg-gradient-to-r from-slate-600 to-slate-500 text-white px-6 py-3 rounded-full shadow-md hover:shadow-lg transition-all duration-300">
+                            <i class="fas fa-edit mr-2"></i> Refine
+                        </button>
+                        <button id="exploreSearch" class="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-6 py-3 rounded-full shadow-md hover:shadow-lg transition-all duration-300">
+                            <i class="fas fa-compass mr-2"></i> Explore
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Explore Suggestions Section (hidden by default) -->
+                <div id="exploreSuggestions" class="hidden rounded-xl p-6 mb-8 mirror-confirmation">
+                    <p class="text-lg mb-4">Explore related ideas:</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="explore-suggestion p-4 rounded-lg border border-sky-400/20 bg-slate-800/50">
+                            <p class="font-medium">"What is recursion?"</p>
+                        </div>
+                        <div class="explore-suggestion p-4 rounded-lg border border-sky-400/20 bg-slate-800/50">
+                            <p class="font-medium">"Mirror principle in AI"</p>
+                        </div>
+                        <div class="explore-suggestion p-4 rounded-lg border border-sky-400/20 bg-slate-800/50">
+                            <p class="font-medium">"Recursive search engines"</p>
+                        </div>
+                    </div>
+                    <div class="text-center mt-4">
+                        <button id="backToSearch" class="bg-gradient-to-r from-slate-600 to-slate-500 text-white px-6 py-3 rounded-full shadow-md hover:shadow-lg transition-all duration-300">
+                            <i class="fas fa-arrow-left mr-2"></i> Back to Search
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Search Results Container -->
                 <div class="rounded-xl p-2 holographic-border backdrop-blur-sm">
-                    <div class="search-results bg-slate-800/50 rounded-lg p-6 border border-sky-400/20">
-                        <iframe 
-                            src="https://duckduckgo.com/search.html?width=350&site=infinitefold.com&prefill=Search Infinite Fold&bgcolor=0f172a" 
-                            style="overflow:hidden;margin:0;padding:0;width:100%;height:600px;" 
-                            frameborder="0"
-                            class="rounded-lg"
-                        ></iframe>
+                    <div id="results" class="search-results bg-slate-800/50 rounded-lg p-6 border border-sky-400/20">
+                        <div class="text-center py-20 text-slate-400">
+                            <i class="fas fa-search fa-3x mb-4 opacity-30"></i>
+                            <p class="text-xl">Your search results will appear here</p>
+                        </div>
                     </div>
                 </div>
 
@@ -279,6 +359,168 @@
                     themeToggle.innerHTML = '<i class="fas fa-sun text-amber-400 text-lg"></i>';
                     document.body.style.background = 'radial-gradient(circle at center, #f8fafc 0%, #e2e8f0 100%)';
                 }
+            });
+
+            // MirrorFold Search Logic
+            const mirrorFoldForm = document.getElementById('mirrorFoldForm');
+            const mirrorQuery = document.getElementById('mirrorQuery');
+            const mirrorConfirmation = document.getElementById('mirrorConfirmation');
+            const confirmationText = document.getElementById('confirmationText');
+            const proceedSearch = document.getElementById('proceedSearch');
+            const refineSearch = document.getElementById('refineSearch');
+            const exploreSearch = document.getElementById('exploreSearch');
+            const exploreSuggestions = document.getElementById('exploreSuggestions');
+            const backToSearch = document.getElementById('backToSearch');
+            const resultsContainer = document.getElementById('results');
+            const voiceSearchBtn = document.getElementById('voiceSearchBtn');
+
+            let currentQuery = '';
+            let searchElement;
+
+            // Initialize Google CSE
+            window.onload = function() {
+                // Create search element but don't render it
+                searchElement = document.createElement('div');
+                searchElement.setAttribute('gcse', 'searchresults-only');
+                searchElement.style.display = 'none';
+                document.body.appendChild(searchElement);
+                
+                // Initialize Google CSE
+                if (window.google && google.search) {
+                    google.search.cse.element.render({
+                        div: searchElement,
+                        tag: 'searchresults-only'
+                    });
+                }
+            };
+
+            // Mirror Confirmation Logic
+            mirrorFoldForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                currentQuery = mirrorQuery.value.trim();
+                
+                if (currentQuery) {
+                    // Show confirmation message
+                    confirmationText.innerHTML = `For clarification, you searched for: <span class="text-amber-300">${currentQuery}</span>. Would you like to proceed, refine, or explore related ideas?`;
+                    mirrorConfirmation.classList.remove('hidden');
+                    mirrorFoldForm.classList.add('hidden');
+                }
+            });
+
+            // Proceed with search
+            proceedSearch.addEventListener('click', function() {
+                mirrorConfirmation.classList.add('hidden');
+                
+                // Clear previous results
+                resultsContainer.innerHTML = '';
+                
+                // Execute Google CSE search
+                if (window.google && google.search && google.search.cse) {
+                    const element = google.search.cse.element.getElement('searchresults-only');
+                    if (element) {
+                        element.execute(currentQuery);
+                        
+                        // Create a results container for Google CSE
+                        const resultsDiv = document.createElement('div');
+                        resultsDiv.className = 'gcse-searchresults-only';
+                        resultsContainer.innerHTML = '';
+                        resultsContainer.appendChild(resultsDiv);
+                        
+                        // Execute the search
+                        element.execute(currentQuery);
+                    } else {
+                        // Fallback message if CSE not loaded
+                        resultsContainer.innerHTML = `
+                            <div class="text-center py-20 text-slate-400">
+                                <i class="fas fa-exclamation-triangle fa-3x mb-4 opacity-30"></i>
+                                <p class="text-xl">Search engine not fully initialized</p>
+                                <p class="mt-2">Please try again in a moment</p>
+                            </div>
+                        `;
+                    }
+                }
+            });
+
+            // Refine search
+            refineSearch.addEventListener('click', function() {
+                mirrorConfirmation.classList.add('hidden');
+                mirrorFoldForm.classList.remove('hidden');
+                mirrorQuery.focus();
+            });
+
+            // Explore suggestions
+            exploreSearch.addEventListener('click', function() {
+                mirrorConfirmation.classList.add('hidden');
+                exploreSuggestions.classList.remove('hidden');
+            });
+
+            // Back to search from explore
+            backToSearch.addEventListener('click', function() {
+                exploreSuggestions.classList.add('hidden');
+                mirrorFoldForm.classList.remove('hidden');
+            });
+
+            // Voice Input Handler
+            let recognition;
+            try {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                recognition = new SpeechRecognition();
+                recognition.continuous = false;
+                recognition.interimResults = false;
+                
+                voiceSearchBtn.addEventListener('click', function() {
+                    if (voiceSearchBtn.classList.contains('voice-active')) {
+                        // Stop recording
+                        recognition.stop();
+                        voiceSearchBtn.classList.remove('voice-active');
+                        voiceSearchBtn.innerHTML = '<i class="fas fa-microphone"></i>';
+                    } else {
+                        // Start recording
+                        voiceSearchBtn.classList.add('voice-active');
+                        voiceSearchBtn.innerHTML = '<i class="fas fa-microphone-slash"></i>';
+                        recognition.start();
+                    }
+                });
+                
+                recognition.onresult = function(event) {
+                    const transcript = event.results[0][0].transcript;
+                    mirrorQuery.value = transcript;
+                    voiceSearchBtn.classList.remove('voice-active');
+                    voiceSearchBtn.innerHTML = '<i class="fas fa-microphone"></i>';
+                    
+                    // Trigger the mirror confirmation flow
+                    currentQuery = transcript;
+                    confirmationText.innerHTML = `For clarification, you searched for: <span class="text-amber-300">${currentQuery}</span>. Would you like to proceed, refine, or explore related ideas?`;
+                    mirrorConfirmation.classList.remove('hidden');
+                    mirrorFoldForm.classList.add('hidden');
+                };
+                
+                recognition.onerror = function(event) {
+                    console.error('Speech recognition error', event.error);
+                    voiceSearchBtn.classList.remove('voice-active');
+                    voiceSearchBtn.innerHTML = '<i class="fas fa-microphone"></i>';
+                };
+                
+                recognition.onend = function() {
+                    if (voiceSearchBtn.classList.contains('voice-active')) {
+                        voiceSearchBtn.classList.remove('voice-active');
+                        voiceSearchBtn.innerHTML = '<i class="fas fa-microphone"></i>';
+                    }
+                };
+            } catch (e) {
+                console.warn('Speech recognition not available', e);
+                voiceSearchBtn.style.display = 'none';
+            }
+
+            // Click handler for explore suggestions
+            document.querySelectorAll('.explore-suggestion').forEach(suggestion => {
+                suggestion.addEventListener('click', function() {
+                    const text = this.querySelector('p').textContent;
+                    mirrorQuery.value = text;
+                    exploreSuggestions.classList.add('hidden');
+                    mirrorFoldForm.classList.remove('hidden');
+                    mirrorQuery.focus();
+                });
             });
         });
     </script>
