@@ -8,6 +8,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   
   
+  
   <style>
     html {
       scroll-behavior: smooth;
@@ -28,6 +29,74 @@
     body {
       font-family: 'Fira Mono', monospace;
     }
+    
+    /* Hamburger Menu Styles */
+    .nav-hamburger {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      z-index: 1000;
+    }
+    
+    .hamburger-btn {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      border: none;
+      outline: none;
+    }
+    
+    .hamburger-icon {
+      display: flex;
+      flex-direction: column;
+      width: 20px;
+      height: 16px;
+      justify-content: space-between;
+    }
+    
+    .line {
+      width: 100%;
+      height: 2px;
+      background-color: currentColor;
+      transition: all 0.3s ease;
+      transform-origin: center;
+    }
+    
+    .hamburger-btn.active .line1 {
+      transform: rotate(45deg) translate(6px, 6px);
+    }
+    
+    .hamburger-btn.active .line2 {
+      opacity: 0;
+    }
+    
+    .hamburger-btn.active .line3 {
+      transform: rotate(-45deg) translate(6px, -6px);
+    }
+    
+    .nav-menu {
+      animation: slideDown 0.3s ease-out;
+    }
+    
+    .nav-menu.hidden {
+      display: none;
+    }
+    
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .nav-link:hover {
+      transform: translateX(4px);
+    }
+    
     .back-to-top {
       position: fixed;
       bottom: 2rem;
@@ -38,19 +107,23 @@
       border-radius: 50%;
       opacity: 0.8;
       transition: opacity 0.3s ease;
-      z-index: 1000;
+      z-index: 999;
       text-decoration: none;
     }
     .back-to-top:hover {
       opacity: 1;
       transform: translateY(-2px);
     }
-    .nav-sticky {
-      position: sticky;
-      top: 1rem;
-      z-index: 100;
-    }
+    
     @media (max-width: 768px) {
+      .nav-hamburger {
+        top: 0.5rem;
+        right: 0.5rem;
+      }
+      .nav-menu {
+        width: 90vw;
+        right: -1rem;
+      }
       .back-to-top {
         bottom: 1rem;
         right: 1rem;
@@ -70,38 +143,53 @@
         </a>
       </div>
     </header>
+    <nav class="nav-hamburger fixed top-4 right-4 z-50">
+      <button id="nav-toggle" class="hamburger-btn bg-slate-900/90 backdrop-blur border border-slate-600 rounded-lg p-3 text-sky-400 hover:text-sky-300 hover:bg-slate-800 transition-all duration-300 shadow-lg">
+        <span class="hamburger-icon">
+          <span class="line line1"></span>
+          <span class="line line2"></span>
+          <span class="line line3"></span>
+        </span>
+        <span class="ml-2 text-sm font-medium">Menu</span>
+      </button>
+      
+      <div id="nav-menu" class="nav-menu hidden absolute top-full right-0 mt-2 w-80 max-h-96 overflow-y-auto bg-slate-900/95 backdrop-blur border border-slate-600 rounded-lg shadow-xl">
+        <div class="p-4">
+          <h3 class="text-amber-300 font-semibold mb-3 text-center border-b border-slate-700 pb-2">📖 Document Sections</h3>
+          <div class="grid grid-cols-1 gap-1">
+            <a href="#math-core" class="nav-link block px-3 py-2 text-sky-400 hover:text-sky-300 hover:bg-slate-800 rounded transition-colors duration-200 text-sm">Mathematical Core</a>
+            <a href="#physics-structure" class="nav-link block px-3 py-2 text-sky-400 hover:text-sky-300 hover:bg-slate-800 rounded transition-colors duration-200 text-sm">Physics Structure</a>
+            <a href="#science-structure" class="nav-link block px-3 py-2 text-sky-400 hover:text-sky-300 hover:bg-slate-800 rounded transition-colors duration-200 text-sm">Science Structure</a>
+            <a href="#language-structure" class="nav-link block px-3 py-2 text-sky-400 hover:text-sky-300 hover:bg-slate-800 rounded transition-colors duration-200 text-sm">Language Structure</a>
+            <a href="#frequency-consciousness" class="nav-link block px-3 py-2 text-sky-400 hover:text-sky-300 hover:bg-slate-800 rounded transition-colors duration-200 text-sm">Frequency & Consciousness</a>
+            <a href="#summary-axiom" class="nav-link block px-3 py-2 text-sky-400 hover:text-sky-300 hover:bg-slate-800 rounded transition-colors duration-200 text-sm">Summary Axiom</a>
+            <a href="#operator-rules" class="nav-link block px-3 py-2 text-sky-400 hover:text-sky-300 hover:bg-slate-800 rounded transition-colors duration-200 text-sm">Operator Rules</a>
+            <a href="#function-types" class="nav-link block px-3 py-2 text-sky-400 hover:text-sky-300 hover:bg-slate-800 rounded transition-colors duration-200 text-sm">Function Types</a>
+            <a href="#operational-apps" class="nav-link block px-3 py-2 text-sky-400 hover:text-sky-300 hover:bg-slate-800 rounded transition-colors duration-200 text-sm">Operational Applications</a>
+            <a href="#system-integration" class="nav-link block px-3 py-2 text-sky-400 hover:text-sky-300 hover:bg-slate-800 rounded transition-colors duration-200 text-sm">System Integration</a>
+            <a href="#sector-mapping" class="nav-link block px-3 py-2 text-sky-400 hover:text-sky-300 hover:bg-slate-800 rounded transition-colors duration-200 text-sm">Sector Mapping</a>
+            <a href="#visual-layout" class="nav-link block px-3 py-2 text-sky-400 hover:text-sky-300 hover:bg-slate-800 rounded transition-colors duration-200 text-sm">Visual Layout</a>
+            <a href="#sound-apps" class="nav-link block px-3 py-2 text-sky-400 hover:text-sky-300 hover:bg-slate-800 rounded transition-colors duration-200 text-sm">Sound Applications</a>
+            <a href="#light-apps" class="nav-link block px-3 py-2 text-sky-400 hover:text-sky-300 hover:bg-slate-800 rounded transition-colors duration-200 text-sm">Light Applications</a>
+            <a href="#motion-force" class="nav-link block px-3 py-2 text-sky-400 hover:text-sky-300 hover:bg-slate-800 rounded transition-colors duration-200 text-sm">Motion/Force</a>
+            <a href="#pressure-apps" class="nav-link block px-3 py-2 text-sky-400 hover:text-sky-300 hover:bg-slate-800 rounded transition-colors duration-200 text-sm">Pressure Applications</a>
+            <a href="#basic-science" class="nav-link block px-3 py-2 text-sky-400 hover:text-sky-300 hover:bg-slate-800 rounded transition-colors duration-200 text-sm">Basic Science</a>
+            <a href="#basic-physics" class="nav-link block px-3 py-2 text-sky-400 hover:text-sky-300 hover:bg-slate-800 rounded transition-colors duration-200 text-sm">Basic Physics</a>
+            <a href="#tier-3" class="nav-link block px-3 py-2 text-sky-400 hover:text-sky-300 hover:bg-slate-800 rounded transition-colors duration-200 text-sm">Tier 3 Records</a>
+            <a href="#tier-4" class="nav-link block px-3 py-2 text-sky-400 hover:text-sky-300 hover:bg-slate-800 rounded transition-colors duration-200 text-sm">Tier 4 Records</a>
+            <a href="#tier-5" class="nav-link block px-3 py-2 text-sky-400 hover:text-sky-300 hover:bg-slate-800 rounded transition-colors duration-200 text-sm">Tier 5 Records</a>
+            <a href="#cognitive-types" class="nav-link block px-3 py-2 text-sky-400 hover:text-sky-300 hover:bg-slate-800 rounded transition-colors duration-200 text-sm">Cognitive Types</a>
+            <a href="#language-mind" class="nav-link block px-3 py-2 text-sky-400 hover:text-sky-300 hover:bg-slate-800 rounded transition-colors duration-200 text-sm">Language-Mind Structure</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+    
 
     <!-- Begin Document Rendering -->
     <main class="prose prose-invert max-w-none">
 
-    <nav class="mb-12 nav-sticky border border-slate-700 rounded-lg p-6 bg-slate-900/80 backdrop-blur shadow-lg">
-      <h3 class="text-lg font-semibold mb-4 text-amber-300 text-center">📖 Document Navigation</h3>
-      <div class="flex flex-wrap gap-3 justify-center text-sm">
-        <a href="#math-core" class="text-sky-400 hover:text-sky-300 hover:underline transition-colors duration-200 px-2 py-1 rounded hover:bg-slate-800">Mathematical Core</a>
-<a href="#physics-structure" class="text-sky-400 hover:text-sky-300 hover:underline transition-colors duration-200 px-2 py-1 rounded hover:bg-slate-800">Physics Structure</a>
-<a href="#science-structure" class="text-sky-400 hover:text-sky-300 hover:underline transition-colors duration-200 px-2 py-1 rounded hover:bg-slate-800">Science Structure</a>
-<a href="#language-structure" class="text-sky-400 hover:text-sky-300 hover:underline transition-colors duration-200 px-2 py-1 rounded hover:bg-slate-800">Language Structure</a>
-<a href="#frequency-consciousness" class="text-sky-400 hover:text-sky-300 hover:underline transition-colors duration-200 px-2 py-1 rounded hover:bg-slate-800">Frequency & Consciousness</a>
-<a href="#summary-axiom" class="text-sky-400 hover:text-sky-300 hover:underline transition-colors duration-200 px-2 py-1 rounded hover:bg-slate-800">Summary Axiom</a>
-<a href="#operator-rules" class="text-sky-400 hover:text-sky-300 hover:underline transition-colors duration-200 px-2 py-1 rounded hover:bg-slate-800">Operator Rules</a>
-<a href="#function-types" class="text-sky-400 hover:text-sky-300 hover:underline transition-colors duration-200 px-2 py-1 rounded hover:bg-slate-800">Function Types</a>
-<a href="#operational-apps" class="text-sky-400 hover:text-sky-300 hover:underline transition-colors duration-200 px-2 py-1 rounded hover:bg-slate-800">Operational Applications</a>
-<a href="#system-integration" class="text-sky-400 hover:text-sky-300 hover:underline transition-colors duration-200 px-2 py-1 rounded hover:bg-slate-800">System Integration</a>
-<a href="#sector-mapping" class="text-sky-400 hover:text-sky-300 hover:underline transition-colors duration-200 px-2 py-1 rounded hover:bg-slate-800">Sector Mapping</a>
-<a href="#visual-layout" class="text-sky-400 hover:text-sky-300 hover:underline transition-colors duration-200 px-2 py-1 rounded hover:bg-slate-800">Visual Layout</a>
-<a href="#sound-apps" class="text-sky-400 hover:text-sky-300 hover:underline transition-colors duration-200 px-2 py-1 rounded hover:bg-slate-800">Sound Applications</a>
-<a href="#light-apps" class="text-sky-400 hover:text-sky-300 hover:underline transition-colors duration-200 px-2 py-1 rounded hover:bg-slate-800">Light Applications</a>
-<a href="#motion-force" class="text-sky-400 hover:text-sky-300 hover:underline transition-colors duration-200 px-2 py-1 rounded hover:bg-slate-800">Motion/Force</a>
-<a href="#pressure-apps" class="text-sky-400 hover:text-sky-300 hover:underline transition-colors duration-200 px-2 py-1 rounded hover:bg-slate-800">Pressure Applications</a>
-<a href="#basic-science" class="text-sky-400 hover:text-sky-300 hover:underline transition-colors duration-200 px-2 py-1 rounded hover:bg-slate-800">Basic Science</a>
-<a href="#basic-physics" class="text-sky-400 hover:text-sky-300 hover:underline transition-colors duration-200 px-2 py-1 rounded hover:bg-slate-800">Basic Physics</a>
-<a href="#tier-3" class="text-sky-400 hover:text-sky-300 hover:underline transition-colors duration-200 px-2 py-1 rounded hover:bg-slate-800">Tier 3 Records</a>
-<a href="#tier-4" class="text-sky-400 hover:text-sky-300 hover:underline transition-colors duration-200 px-2 py-1 rounded hover:bg-slate-800">Tier 4 Records</a>
-<a href="#tier-5" class="text-sky-400 hover:text-sky-300 hover:underline transition-colors duration-200 px-2 py-1 rounded hover:bg-slate-800">Tier 5 Records</a>
-<a href="#cognitive-types" class="text-sky-400 hover:text-sky-300 hover:underline transition-colors duration-200 px-2 py-1 rounded hover:bg-slate-800">Planetary Cognitive Types</a>
-<a href="#language-mind" class="text-sky-400 hover:text-sky-300 hover:underline transition-colors duration-200 px-2 py-1 rounded hover:bg-slate-800">Language-Mind Structure</a>
-      </div>
-    </nav>
+    
     
 <div class="page-number text-right mb-4">Page 1 of 324</div>
 <div class="page-content"><h1 class="text-3xl font-bold text-center mb-8 text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-amber-300">THE INFINITE FOLD</h1>
@@ -8614,5 +8702,43 @@ This creates a non-destructive <div class="formula bg-slate-800 p-4 rounded-lg m
     <a href="#top" class="back-to-top" title="Back to Top">
       ↑
     </a>
+  
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const navToggle = document.getElementById('nav-toggle');
+        const navMenu = document.getElementById('nav-menu');
+        const navLinks = document.querySelectorAll('.nav-link');
+        
+        // Toggle menu
+        navToggle.addEventListener('click', function() {
+          navMenu.classList.toggle('hidden');
+          navToggle.classList.toggle('active');
+        });
+        
+        // Close menu when clicking on a link
+        navLinks.forEach(link => {
+          link.addEventListener('click', function() {
+            navMenu.classList.add('hidden');
+            navToggle.classList.remove('active');
+          });
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', function(e) {
+          if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) {
+            navMenu.classList.add('hidden');
+            navToggle.classList.remove('active');
+          }
+        });
+        
+        // Close menu on escape key
+        document.addEventListener('keydown', function(e) {
+          if (e.key === 'Escape' && !navMenu.classList.contains('hidden')) {
+            navMenu.classList.add('hidden');
+            navToggle.classList.remove('active');
+          }
+        });
+      });
+    </script>
   </body>
 </html>
